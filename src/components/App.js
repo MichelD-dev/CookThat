@@ -4,6 +4,7 @@ import ConnexionForm from './ConnexionForm'
 import ProfileForm from './ProfileForm'
 import AddRecipeForm from './AddRecipeForm'
 import Footer from './Footer'
+import Accueil from './Accueil'
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         <div className='App'>
           <header className='App-header'>
             <ul>
+              <li>
+                <Link to='/'>Accueil</Link>
+              </li>
               <li>
                 <Link to='/inscription'>Inscription</Link>
               </li>
@@ -25,6 +29,9 @@ function App() {
                 <Link to='/addrecipe'>Ajouter une recette</Link>
               </li>
             </ul>
+            <Route path='/' exact strict>
+              <Accueil />
+            </Route>
             <Route path='/inscription' exact strict>
               <InscriptionForm />
             </Route>

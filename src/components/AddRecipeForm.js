@@ -28,7 +28,9 @@ const AddRecipeForm = () => {
   }
 
   const supprimerIngredient = indexToRemove => {
-    setIngredientsList(ingredientsList.filter((ingredient, index) => index !== indexToRemove))
+    setIngredientsList(
+      ingredientsList.filter((ingredient, index) => index !== indexToRemove)
+    )
   }
 
   const handleDifficulty = e => {
@@ -37,7 +39,7 @@ const AddRecipeForm = () => {
 
   return (
     <>
-      <form className='ui form container'>
+      <form className='ui form container' style={{ paddingBottom: '70px' }}>
         <h2>Ajouter une recette</h2>
         <div className='field'>
           <label htmlFor='recipe-name'>Nom de la recette</label>
@@ -174,7 +176,7 @@ const AddRecipeForm = () => {
             </div>
           </div>
         </div>
-        <button className='fluid ui olive button'>Sauvegarder</button>
+        <button className='fluid ui large olive button'>Sauvegarder</button>
       </form>
     </>
   )

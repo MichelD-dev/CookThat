@@ -3,6 +3,7 @@ const ProfileForm = () => {
     <>
       <form className='ui form container'>
         <h2>Mon profil</h2>
+        <br/>
         <button className='ui button' type='button'>
           Mes recettes
         </button>
@@ -10,6 +11,7 @@ const ProfileForm = () => {
           Mes favoris
         </button>
         <div className='field'>
+        <br/>
           <label htmlFor='email'>Email:</label>
           <input type='email' id='email' />
         </div>
@@ -21,6 +23,7 @@ const ProfileForm = () => {
           <label htmlFor='password'>Nouveau mot de passe:</label>
           <input type='password' id='password' />
         </div>
+        <br/>
         <button className='ui button' type='submit'>
           Mettre à jour mes informations
         </button>
