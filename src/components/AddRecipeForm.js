@@ -4,9 +4,6 @@ import { useState } from 'react'
 // import Ingredients from './Ingredients'
 
 const AddRecipeForm = () => {
-  const [ingredient, setIngredient] = useState('')
-  const [quantity, setQuantity] = useState()
-  const [unit, setUnit] = useState()
   const [ingredientsList, setIngredientsList] = useState([
     { name: '', quantity: 0, unit: 'c.a.s' },
   ])
@@ -20,18 +17,18 @@ const AddRecipeForm = () => {
     ])
   }
 
-  const retoucherIngredient = (newIngredient, index) => {
+  const retoucherIngredient = (newIngredient, indexToModify) => {
     setIngredientsList(
-      ingredientsList.map((ingredient, i) => {
-        if (i !== index) return ingredient
+      ingredientsList.map((ingredient, index) => {
+        if (index !== indexToModify) return ingredient
 
         return { ...ingredient, ...newIngredient }
       })
     )
   }
 
-  const supprimerIngredient = (index) => {
-    setIngredientsList(ingredientsList.filter((ingredient, i) => i !== index))
+  const supprimerIngredient = indexToRemove => {
+    setIngredientsList(ingredientsList.filter((ingredient, index) => index !== indexToRemove))
   }
 
   const handleDifficulty = e => {
@@ -88,11 +85,8 @@ const AddRecipeForm = () => {
         {/* <Ingredients /> */}
         {/* <Cooking steps /> */}
         {/* {showIngredients && <Ingredients data={ingredientsList} />} */}
-        {ingredientsList.map((ingredient, index) => (
-          <div
-            className='ui form container segment'
-            key={`ingredient-${index}`}
-          >
+        {ingredientsList.map((ingredient, i) => (
+          <div className='ui form container segment' key={`ingredient-${i}`}>
             <div className='field'>
               <label htmlFor='ingredient'>Ingrédient</label>
               <input
@@ -102,7 +96,7 @@ const AddRecipeForm = () => {
                 onChange={e =>
                   retoucherIngredient(
                     { ...ingredient, name: e.currentTarget.value },
-                    index
+                    i
                   )
                 }
                 value={ingredient.name}
@@ -119,7 +113,7 @@ const AddRecipeForm = () => {
                     onChange={e =>
                       retoucherIngredient(
                         { ...ingredient, quantity: e.currentTarget.value },
-                        index
+                        i
                       )
                     }
                     value={ingredient.quantity}
@@ -134,7 +128,7 @@ const AddRecipeForm = () => {
                   onChange={e =>
                     retoucherIngredient(
                       { ...ingredient, unit: e.currentTarget.value },
-                      index
+                      i
                     )
                   }
                   value={ingredient.unit}
@@ -147,7 +141,15 @@ const AddRecipeForm = () => {
                 </select>
               </div>
             </div>
-            <button className='fluid ui red button' onClick={supprimerIngredient}>Supprimer</button>
+            <button
+              className='fluid ui red button'
+              onClick={e => {
+                e.preventDefault()
+                supprimerIngredient(i)
+              }}
+            >
+              Supprimer
+            </button>
             <br />
           </div>
         ))}
@@ -160,9 +162,14 @@ const AddRecipeForm = () => {
         <div className='ui segment'>
           <h5>Sauvegarder et mettre en ligne</h5>
 
-          <div class='field'>
-            <div class='ui toggle checkbox'>
-              <input type='checkbox' name='gift' tabindex='0' class='hidden' />
+          <div className='field'>
+            <div className='ui toggle checkbox'>
+              <input
+                type='checkbox'
+                name='gift'
+                tabindex='0'
+                className='hidden'
+              />
               <label>Mettre en ligne</label>
             </div>
           </div>
