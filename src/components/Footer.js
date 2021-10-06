@@ -10,8 +10,8 @@ const Footer = () => {
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <footer
-        style={{ position: 'fixed', bottom: 0, height: '35px', width: '100%' }}
-        className='ui inverted vertical segment '
+        style={{ position: 'fixed', bottom: 0, height: '50px', width: '100%' }}
+        className='ui segment '
       >
         <div className='ui container'>
           <FontAwesomeIcon icon={faHouseChimney} />

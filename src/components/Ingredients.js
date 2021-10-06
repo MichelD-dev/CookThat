@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Ingredients = () => {
+const Ingredients = ({data}) => {
   const [ingredient, setIngredient] = useState('')
   const [quantity, setQuantity] = useState()
   const [unit, setUnit] = useState()
