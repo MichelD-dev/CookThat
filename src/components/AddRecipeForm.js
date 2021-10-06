@@ -20,11 +20,23 @@ const AddRecipeForm = () => {
     ])
   }
 
+  const retoucherIngredient = (newIngredient, index) => {
+    setIngredientsList(
+      ingredientsList.map((ingredient, i) => {
+        if (i !== index) return ingredient
+
+        return { ...ingredient, ...newIngredient }
+      })
+    )
+  }
+
+  const supprimerIngredient = (index) => {
+    setIngredientsList(ingredientsList.filter((ingredient, i) => i !== index))
+  }
+
   const handleDifficulty = e => {
     e.preventDefault()
   }
-
-
 
   return (
     <>
@@ -87,7 +99,12 @@ const AddRecipeForm = () => {
                 id='ingredient'
                 type='text'
                 name='ingredient'
-                onChange={e => setIngredient(e.target.value)}
+                onChange={e =>
+                  retoucherIngredient(
+                    { ...ingredient, name: e.currentTarget.value },
+                    index
+                  )
+                }
                 value={ingredient.name}
               />
             </div>
@@ -99,7 +116,12 @@ const AddRecipeForm = () => {
                   <input
                     type='text'
                     id='quantity'
-                    onChange={e => setQuantity(e.currentTarget.value)}
+                    onChange={e =>
+                      retoucherIngredient(
+                        { ...ingredient, quantity: e.currentTarget.value },
+                        index
+                      )
+                    }
                     value={ingredient.quantity}
                   />
                 </div>
@@ -109,7 +131,12 @@ const AddRecipeForm = () => {
                 <select
                   id='unit'
                   className='ui fluid search dropdown'
-                  onChange={e => setUnit(e.currentTarget.value)}
+                  onChange={e =>
+                    retoucherIngredient(
+                      { ...ingredient, unit: e.currentTarget.value },
+                      index
+                    )
+                  }
                   value={ingredient.unit}
                 >
                   <option value='c.a.s'>c.a.s</option>
@@ -120,7 +147,7 @@ const AddRecipeForm = () => {
                 </select>
               </div>
             </div>
-            <button className='fluid ui red button'>Supprimer</button>
+            <button className='fluid ui red button' onClick={supprimerIngredient}>Supprimer</button>
             <br />
           </div>
         ))}
