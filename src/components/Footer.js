@@ -19,20 +19,20 @@ const Footer = () => {
         opacity: '.8',
       }}
     >
-      <a className='item'>
-        <FontAwesomeIcon icon={faHouseChimney} size='xl' color='#333' />
+      <a href='/' className='item'>
+        <FontAwesomeIcon icon={faHouseChimney} size='2x' color='#333' />
       </a>
-      <a className='item'>
-        <FontAwesomeIcon icon={faSquarePlus} size='xl' color='#333' />
+      <a href='/addRecipe' className='item'>
+        <FontAwesomeIcon icon={faSquarePlus} size='2x' color='#333' />
       </a>
-      <a className='item'>
+      <a href='/' className='item'>
         <img src='../assets/images/logo.svg' alt='' />
       </a>
-      <a className='item'>
-        <FontAwesomeIcon icon={faHeart} size='xl' color='#333' />
+      <a href='/' className='item'>
+        <FontAwesomeIcon icon={faHeart} size='2x' color='#333' />
       </a>
-      <a className='item'>
-        <FontAwesomeIcon icon={faUserLarge} size='xl' color='#333' />
+      <a href='/profile' className='item'>
+        <FontAwesomeIcon icon={faUserLarge} size='2x' color='#333' />
       </a>
     </footer>
   )

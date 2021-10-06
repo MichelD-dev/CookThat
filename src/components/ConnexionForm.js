@@ -46,7 +46,7 @@ const ConnexionForm = () => {
         {error && <p>{error}</p>}
         <button className='fluid ui button'>Connexion</button>
         <br/>
-        <a href='#'>Créer un compte</a>
+        <a href='/inscription'>Créer un compte</a>
       </form>
     </>
   )

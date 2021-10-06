@@ -4,17 +4,24 @@ import { useState } from 'react'
 // import Ingredients from './Ingredients'
 
 const AddRecipeForm = () => {
+  const [etapesList, setEtapesList] = useState([{ description: '' }])
   const [ingredientsList, setIngredientsList] = useState([
     { name: '', quantity: 0, unit: 'c.a.s' },
   ])
 
-  const handleAddIngredients = e => {
+  const ajouterIngredient = e => {
     e.preventDefault()
 
     setIngredientsList([
       ...ingredientsList,
       { name: '', quantity: 0, unit: 'c.a.s' },
     ])
+  }
+
+  const ajouterEtape = e => {
+    e.preventDefault()
+
+    setEtapesList([...etapesList, { description: '' }])
   }
 
   const retoucherIngredient = (newIngredient, indexToModify) => {
@@ -27,10 +34,24 @@ const AddRecipeForm = () => {
     )
   }
 
+  const retoucherEtape = (newEtape, indexToModify) => {
+    setEtapesList(
+      etapesList.map((etape, index) => {
+        if (index !== indexToModify) return etape
+
+        return { ...etape, ...newEtape }
+      })
+    )
+  }
+
   const supprimerIngredient = indexToRemove => {
     setIngredientsList(
       ingredientsList.filter((ingredient, index) => index !== indexToRemove)
     )
+  }
+
+  const supprimerEtape = indexToRemove => {
+    setEtapesList(etapesList.filter((etape, index) => index !== indexToRemove))
   }
 
   const handleDifficulty = e => {
@@ -87,6 +108,7 @@ const AddRecipeForm = () => {
         {/* <Ingredients /> */}
         {/* <Cooking steps /> */}
         {/* {showIngredients && <Ingredients data={ingredientsList} />} */}
+        <h5>Ingrédients</h5>
         {ingredientsList.map((ingredient, i) => (
           <div className='ui form container segment' key={`ingredient-${i}`}>
             <div className='field'>
@@ -105,28 +127,26 @@ const AddRecipeForm = () => {
               />
             </div>
 
-            <div className='two fields'>
-              <div className='field'>
-                <div className='field'>
-                  <label htmlFor='quantity'>Quantité</label>
-                  <input
-                    type='text'
-                    id='quantity'
-                    onChange={e =>
-                      retoucherIngredient(
-                        { ...ingredient, quantity: e.currentTarget.value },
-                        i
-                      )
-                    }
-                    value={ingredient.quantity}
-                  />
-                </div>
+            <div className='fields' style={{ marginBottom: '20px' }}>
+              <div className=' field'>
+                <label htmlFor='quantity'>Quantité</label>
+                <input
+                  type='text'
+                  id='quantity'
+                  onChange={e =>
+                    retoucherIngredient(
+                      { ...ingredient, quantity: e.currentTarget.value },
+                      i
+                    )
+                  }
+                  value={ingredient.quantity}
+                />
               </div>
-              <div className='field'>
+              <div className=' field'>
                 <label htmlFor='unit'>Mesure</label>
                 <select
                   id='unit'
-                  className='ui fluid search dropdown'
+                  className='ui selection dropdown'
                   onChange={e =>
                     retoucherIngredient(
                       { ...ingredient, unit: e.currentTarget.value },
@@ -156,24 +176,76 @@ const AddRecipeForm = () => {
           </div>
         ))}
 
-        <button className='fluid ui button' onClick={handleAddIngredients}>
+        <button className='fluid ui button' onClick={ajouterIngredient}>
           Ajouter un ingrédient
         </button>
+
+        <h5>Etapes</h5>
+        {etapesList.map((etape, i) => (
+          <div className='ui form container segment' key={`etape-${i}`}>
+            <div
+              className='fields'
+              style={{
+                marginBottom: '20px',
+                display: 'flex',
+                justifyContent: 'space-evenly',
+              }}
+            >
+              <div className='field'>
+                <div className='ui olive circular large label'>{i + 1}</div>
+              </div>
+
+              <div className='field'>
+                <textarea
+                  rows='3'
+                  cols='40'
+                  onChange={e =>
+                    retoucherEtape(
+                      { ...etape, description: e.currentTarget.value },
+                      i
+                    )
+                  }
+                  value={etape.description}
+                ></textarea>
+                {/* <input
+                  type='text'
+                  onChange={e =>
+                    retoucherEtape(
+                      { ...etape, description: e.currentTarget.value },
+                      i
+                    )
+                  }
+                  value={etape.description}
+                /> */}
+              </div>
+            </div>
+
+            <button
+              className='fluid ui red button'
+              onClick={e => {
+                e.preventDefault()
+                supprimerEtape(i)
+              }}
+            >
+              Supprimer
+            </button>
+            <br />
+          </div>
+        ))}
         <br />
-        <button className='fluid ui button'>Ajouter une étape</button>
+        <button className='fluid ui button' onClick={ajouterEtape}>
+          Ajouter une étape
+        </button>
         <div className='ui segment'>
           <h5>Sauvegarder et mettre en ligne</h5>
 
-          <div className='field'>
-            <div className='ui toggle checkbox'>
-              <input
-                type='checkbox'
-                name='gift'
-                tabindex='0'
-                className='hidden'
-              />
-              <label>Mettre en ligne</label>
-            </div>
+          <div className='ui toggle checkbox'>
+            <input
+              type='checkbox'
+              name='inline'
+              // className='hidden'
+            />
+            <label>Mettre en ligne</label>
           </div>
         </div>
         <button className='fluid ui large olive button'>Sauvegarder</button>
