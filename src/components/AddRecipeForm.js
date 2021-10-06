@@ -1,7 +1,23 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
+import Ingredients from './Ingredients'
 
 const AddRecipeForm = () => {
+  const [ingredients, setIngredients] = useState({})
+  const [showIngredients, setShowIngredients] = useState(false)
+
+  const handleAddIngredients = e => {
+    e.preventDefault()
+    setIngredients(prevIngredients => prevIngredients + 1)
+    console.log(ingredients)
+    setShowIngredients(true)
+  }
+
+  const handleDifficulty = e => {
+    e.preventDefault()
+  }
+
   return (
     <>
       <form className='ui form container'>
@@ -11,19 +27,25 @@ const AddRecipeForm = () => {
           <input type='text' id='recipe-name' />
         </div>
         <h5>Photos</h5>
-        <div className="ui icon input">
+        <div className='ui icon input'>
           {/* <label htmlFor='image-loading'>Ajouter une photo</label> */}
           {/* <input type='text' id='image-loading' accept='image/*' /> */}
           <FontAwesomeIcon icon={faImages} />
         </div>
 
-        <div class='ui fluid vertical buttons'>
+        <div className='ui fluid vertical buttons'>
           <h5>Difficulté</h5>
-          <button className='ui button'>Facile</button>
+          <button className='ui button ' onClick={handleDifficulty}>
+            Facile
+          </button>
           <br />
-          <button className='ui button'>Moyen</button>
+          <button className='ui button' onClick={handleDifficulty}>
+            Moyen
+          </button>
           <br />
-          <button className='ui button'>Difficile</button>
+          <button className='ui button' onClick={handleDifficulty}>
+            Difficile
+          </button>
           <br />
         </div>
 
@@ -45,18 +67,23 @@ const AddRecipeForm = () => {
         </div>
         {/* <Ingredients /> */}
         {/* <Cooking steps /> */}
-        <button className='fluid ui button'>Ajouter un ingrédient</button>
-        <br/>
+        {showIngredients && <Ingredients />}
+        <button className='fluid ui button' onClick={handleAddIngredients}>
+          Ajouter un ingrédient
+        </button>
+        <br />
         <button className='fluid ui button'>Ajouter une étape</button>
-        <h5>Sauvegarder et mettre en ligne</h5>
+        <div className='ui segment'>
+          <h5>Sauvegarder et mettre en ligne</h5>
 
-        <div class='field'>
-          <div class='ui toggle checkbox'>
-            <input type='checkbox' name='gift' tabindex='0' class='hidden' />
-            <label>Mettre en ligne</label>
+          <div class='field'>
+            <div class='ui toggle checkbox'>
+              <input type='checkbox' name='gift' tabindex='0' class='hidden' />
+              <label>Mettre en ligne</label>
+            </div>
           </div>
         </div>
-        <button className='fluid ui green button'>Sauvegarder</button>
+        <button className='fluid ui olive button'>Sauvegarder</button>
       </form>
     </>
   )

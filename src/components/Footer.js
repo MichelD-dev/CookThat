@@ -8,15 +8,20 @@ import {
 
 const Footer = () => {
   return (
-    <footer className='ui inverted vertical segment '>
-      <div className='ui container'>
-        <FontAwesomeIcon icon={faHouseChimney} />
-        <FontAwesomeIcon icon={faSquarePlus} />
-        <img src='../assets/images/logo.svg' alt='' />
-        <FontAwesomeIcon icon={faHeart} />
-        <FontAwesomeIcon icon={faUserLarge} />
-      </div>
-    </footer>
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
+      <footer
+        style={{ position: 'fixed', bottom: 0, height: '35px', width: '100%' }}
+        className='ui inverted vertical segment '
+      >
+        <div className='ui container'>
+          <FontAwesomeIcon icon={faHouseChimney} />
+          <FontAwesomeIcon icon={faSquarePlus} />
+          <img src='../assets/images/logo.svg' alt='' />
+          <FontAwesomeIcon icon={faHeart} />
+          <FontAwesomeIcon icon={faUserLarge} />
+        </div>
+      </footer>
+    </div>
   )
 }
 

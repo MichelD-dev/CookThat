@@ -31,12 +31,12 @@ function App() {
             <Route path='/connexion' exact strict>
               <ConnexionForm />
             </Route>
-             <Route path='/profile' exact strict>
+            <Route path='/profile' exact strict>
               <ProfileForm />
             </Route>
             <Route path='/addrecipe' exact strict>
               <AddRecipeForm />
-            </Route> 
+            </Route>
           </header>
         </div>
       </BrowserRouter>
