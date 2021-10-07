@@ -6,7 +6,7 @@ import {
   faUserLarge,
 } from '@fortawesome/free-solid-svg-icons'
 
-const Footer = () => {
+const Footer = ({ onShowModal }) => {
   return (
     <footer
       className='ui  five item menu'
@@ -31,9 +31,9 @@ const Footer = () => {
       <a href='/' className='item'>
         <FontAwesomeIcon icon={faHeart} size='2x' color='#333' />
       </a>
-      <a href='/profile' className='item'>
+      <button className='ui basic button' onClick={onShowModal}>
         <FontAwesomeIcon icon={faUserLarge} size='2x' color='#333' />
-      </a>
+      </button>
     </footer>
   )
 }

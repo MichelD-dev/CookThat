@@ -1,8 +1,9 @@
 import { auth } from '../firebase/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { useState } from 'react'
+import Modal from './Modal'
 
-const InscriptionForm = () => {
+const InscriptionForm = ({ onHideModal, hideInscriptionModal }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
@@ -21,9 +22,9 @@ const InscriptionForm = () => {
   }
 
   return (
-    <>
+    <Modal onHideModal={hideInscriptionModal}>
       <form className='ui form container' onSubmit={send}>
-        <h2>Inscription</h2>
+        <h3 style={{ textAlign: 'center' }}>Inscription</h3>
         <div className='field'>
           <label htmlFor='email'>Email:</label>
           <input
@@ -48,9 +49,9 @@ const InscriptionForm = () => {
             onChange={e => setPassword2(e.currentTarget.value)}
           />
         </div>
-        <button className='fluid ui button'>Inscription</button>
+        <button className='fluid ui button'>S'inscrire</button>
       </form>
-    </>
+    </Modal>
   )
 }
 

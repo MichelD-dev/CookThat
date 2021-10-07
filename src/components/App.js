@@ -5,10 +5,45 @@ import ProfileForm from './ProfileForm'
 import AddRecipeForm from './AddRecipeForm'
 import Footer from './Footer'
 import Accueil from './Accueil'
+import { useState } from 'react'
 
 function App() {
+  const [modalConnexionIsShown, setModalConnexionIsShown] = useState(true)
+  const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
+
+  const showConnexionModal = () => {
+    setModalConnexionIsShown(true)
+  }
+
+  const hideConnexionModal = () => {
+    setModalConnexionIsShown(false)
+  }
+  const showInscriptionModal = () => {
+    setModalInscriptionIsShown(true)
+  }
+
+  const hideInscriptionModal = () => {
+    setModalInscriptionIsShown(false)
+  }
+
   return (
-    <div>
+    <div
+      style={{
+        filter:
+          (modalConnexionIsShown || modalInscriptionIsShown) && 'blur(8px)',
+        opacity: (modalConnexionIsShown || modalInscriptionIsShown) && '.6',
+      }}
+    >
+      {modalConnexionIsShown && (
+        <ConnexionForm
+          hideConnexionModal={hideConnexionModal}
+          showInscriptionModal={showInscriptionModal}
+          hideInscriptionModal={hideInscriptionModal}
+        />
+      )}
+      {modalInscriptionIsShown && (
+        <InscriptionForm hideInscriptionModal={hideInscriptionModal} />
+      )}
       <BrowserRouter>
         <div className='App'>
           <header className='App-header'>
@@ -47,7 +82,7 @@ function App() {
           </header>
         </div>
       </BrowserRouter>
-      <Footer />
+      <Footer onShowModal={showConnexionModal} />
     </div>
   )
 }

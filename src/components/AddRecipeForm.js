@@ -1,8 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImages } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../firebase/firebase.js'
+import FileUpload from './FileUpload.js'
 // import Ingredients from './Ingredients'
 
 const AddRecipeForm = () => {
@@ -18,11 +17,11 @@ const AddRecipeForm = () => {
     restTime: 0,
     cookingTime: 0,
     persons: 0,
-    ingredient: {...ingredientsList},
-    etape: {...etapesList},
+    ingredient: { ...ingredientsList },
+    etape: { ...etapesList },
     inline: false,
   })
-  console.log(recettes.ingredient)
+
   const ajouterIngredient = e => {
     e.preventDefault()
 
@@ -30,6 +29,8 @@ const AddRecipeForm = () => {
       ...ingredientsList,
       { name: '', quantity: 0, unit: 'c.a.s' },
     ])
+    console.log(ingredientsList)
+    console.log(recettes.ingredient)
   }
 
   const ajouterEtape = e => {
@@ -95,31 +96,36 @@ const AddRecipeForm = () => {
           />
         </div>
         <h5>Photos</h5>
-        <div className='ui icon input'>
-          {/* <label htmlFor='image-loading'>Ajouter une photo</label> */}
-          {/* <input type='text' id='image-loading' accept='image/*' /> */}
-          <FontAwesomeIcon icon={faImages} />
-        </div>
+        <div className='ui icon input'>{/* <FileUpload /> */}</div>
 
         <div className='ui fluid vertical buttons'>
           <h5>Difficulté</h5>
           <button
             className='ui button '
-            onClick={e => setRecettes({ ...recettes, difficulty: 'facile' })}
+            onClick={e => {
+              e.preventDefault()
+              setRecettes({ ...recettes, difficulty: 'facile' })
+            }}
           >
             Facile
           </button>
           <br />
           <button
             className='ui button'
-            onClick={e => setRecettes({ ...recettes, difficulty: 'moyen' })}
+            onClick={e => {
+              e.preventDefault()
+              setRecettes({ ...recettes, difficulty: 'moyen' })
+            }}
           >
             Moyen
           </button>
           <br />
           <button
             className='ui button'
-            onClick={e => setRecettes({ ...recettes, difficulty: 'difficile' })}
+            onClick={e => {
+              e.preventDefault()
+              setRecettes({ ...recettes, difficulty: 'difficile' })
+            }}
           >
             Difficile
           </button>
@@ -320,6 +326,3 @@ const AddRecipeForm = () => {
   )
 }
 export default AddRecipeForm
-
-
-
