@@ -1,15 +1,17 @@
-import { BrowserRouter, Link, Route } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import InscriptionForm from './InscriptionForm'
 import ConnexionForm from './ConnexionForm'
 import ProfileForm from './ProfileForm'
 import AddRecipeForm from './AddRecipeForm'
+import Favoris from './Favoris'
 import Footer from './Footer'
 import Accueil from './Accueil'
 import { useState } from 'react'
 
 function App() {
-  const [modalConnexionIsShown, setModalConnexionIsShown] = useState(true)
+  const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
+  const [user, setUser] = useState()
 
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)
@@ -45,44 +47,23 @@ function App() {
         <InscriptionForm hideInscriptionModal={hideInscriptionModal} />
       )}
       <BrowserRouter>
-        <div className='App'>
-          <header className='App-header'>
-            <ul>
-              <li>
-                <Link to='/'>Accueil</Link>
-              </li>
-              <li>
-                <Link to='/inscription'>Inscription</Link>
-              </li>
-              <li>
-                <Link to='/connexion'>Connexion</Link>
-              </li>
-              <li>
-                <Link to='/profile'>Mon profil</Link>
-              </li>
-              <li>
-                <Link to='/addrecipe'>Ajouter une recette</Link>
-              </li>
-            </ul>
-            <Route path='/' exact strict>
-              <Accueil />
-            </Route>
-            <Route path='/inscription' exact strict>
-              <InscriptionForm />
-            </Route>
-            <Route path='/connexion' exact strict>
-              <ConnexionForm />
-            </Route>
-            <Route path='/profile' exact strict>
-              <ProfileForm />
-            </Route>
-            <Route path='/addrecipe' exact strict>
-              <AddRecipeForm />
-            </Route>
-          </header>
-        </div>
+
+        <Route path='/' exact strict component={Accueil} />
+
+        <Route path='/profile' exact strict render={() => <ProfileForm />} />
+
+        <Route
+          path='/addrecipe'
+          exact
+          strict
+          render={() => <AddRecipeForm />}
+        />
+
+        <Route path='/favoris' exact strict render={() => <Favoris />} />
+
+        <Footer onShowModal={showConnexionModal} user={user} />
+
       </BrowserRouter>
-      <Footer onShowModal={showConnexionModal} />
     </div>
   )
 }

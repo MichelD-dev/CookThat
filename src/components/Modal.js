@@ -36,7 +36,7 @@ const Overlay = props => {
           opacity: '1',
         }}
       >
-        {props.children}{' '}
+        {props.children}
       </div>
     </div>
   )

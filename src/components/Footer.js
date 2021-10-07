@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faHouseChimney,
@@ -6,34 +7,76 @@ import {
   faUserLarge,
 } from '@fortawesome/free-solid-svg-icons'
 
-const Footer = ({ onShowModal }) => {
+const Footer = ({ onShowModal, user }) => {
+  const checkUserStatus = e => {
+    if (user) {
+      return
+    }
+    e.preventDefault()
+    onShowModal()
+  }
+
   return (
     <footer
-      className='ui  five item menu'
+      className='ui five item menu'
       style={{
         position: 'fixed',
         bottom: 0,
-        height: '50px',
+        height: '60px',
         width: '100%',
         backgroundColor: '#eee',
         opacity: '.8',
       }}
     >
-      <a href='/' className='item'>
+      {/*---------------------------------------------------------*/}
+      {/*---------------------------------------------------------*/}
+
+      <Link to='/' className='ui basic button item'>
         <FontAwesomeIcon icon={faHouseChimney} size='2x' color='#333' />
-      </a>
-      <a href='/addRecipe' className='item'>
+      </Link>
+
+      {/*---------------------------------------------------------*/}
+      {/*---------------------------------------------------------*/}
+
+      <Link
+        onClick={checkUserStatus}
+        to='/addrecipe'
+        className='ui basic button item'
+      >
         <FontAwesomeIcon icon={faSquarePlus} size='2x' color='#333' />
-      </a>
-      <a href='/' className='item'>
+      </Link>
+
+      {/*---------------------------------------------------------*/}
+      {/*---------------------------------------------------------*/}
+
+      <Link to='/' className='ui basic button item'>
         <img src='../assets/images/logo.svg' alt='' />
-      </a>
-      <a href='/' className='item'>
+      </Link>
+
+      {/*---------------------------------------------------------*/}
+      {/*---------------------------------------------------------*/}
+
+      <Link
+        onClick={checkUserStatus}
+        to='/favoris'
+        className='ui basic button item'
+      >
         <FontAwesomeIcon icon={faHeart} size='2x' color='#333' />
-      </a>
-      <button className='ui basic button' onClick={onShowModal}>
+      </Link>
+
+      {/*---------------------------------------------------------*/}
+      {/*---------------------------------------------------------*/}
+
+      <Link
+        onClick={checkUserStatus}
+        to='/profile'
+        className='ui basic button item'
+      >
         <FontAwesomeIcon icon={faUserLarge} size='2x' color='#333' />
-      </button>
+      </Link>
+
+      {/*---------------------------------------------------------*/}
+      {/*---------------------------------------------------------*/}
     </footer>
   )
 }
