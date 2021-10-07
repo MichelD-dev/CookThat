@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
+import { collection, addDoc } from 'firebase/firestore'
+import { db } from '../firebase/firebase.js'
 // import Ingredients from './Ingredients'
 
 const AddRecipeForm = () => {
@@ -8,7 +10,19 @@ const AddRecipeForm = () => {
   const [ingredientsList, setIngredientsList] = useState([
     { name: '', quantity: 0, unit: 'c.a.s' },
   ])
-
+  const [recettes, setRecettes] = useState({
+    name: '',
+    photo: '',
+    difficulty: '',
+    prepTime: 0,
+    restTime: 0,
+    cookingTime: 0,
+    persons: 0,
+    ingredient: {...ingredientsList},
+    etape: {...etapesList},
+    inline: false,
+  })
+  console.log(recettes.ingredient)
   const ajouterIngredient = e => {
     e.preventDefault()
 
@@ -54,17 +68,31 @@ const AddRecipeForm = () => {
     setEtapesList(etapesList.filter((etape, index) => index !== indexToRemove))
   }
 
-  const handleDifficulty = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
+    console.warn(recettes)
+    const recette = await addDoc(collection(db, 'recipes'), recettes)
+    console.log(recette.name)
   }
 
   return (
     <>
-      <form className='ui form container' style={{ paddingBottom: '70px' }}>
+      <form
+        onSubmit={handleSubmit}
+        className='ui form container'
+        style={{ paddingBottom: '70px' }}
+      >
         <h2>Ajouter une recette</h2>
         <div className='field'>
           <label htmlFor='recipe-name'>Nom de la recette</label>
-          <input type='text' id='recipe-name' />
+          <input
+            type='text'
+            id='recipe-name'
+            onChange={e =>
+              setRecettes({ ...recettes, name: e.currentTarget.value })
+            }
+            value={recettes.name}
+          />
         </div>
         <h5>Photos</h5>
         <div className='ui icon input'>
@@ -75,15 +103,24 @@ const AddRecipeForm = () => {
 
         <div className='ui fluid vertical buttons'>
           <h5>Difficulté</h5>
-          <button className='ui button ' onClick={handleDifficulty}>
+          <button
+            className='ui button '
+            onClick={e => setRecettes({ ...recettes, difficulty: 'facile' })}
+          >
             Facile
           </button>
           <br />
-          <button className='ui button' onClick={handleDifficulty}>
+          <button
+            className='ui button'
+            onClick={e => setRecettes({ ...recettes, difficulty: 'moyen' })}
+          >
             Moyen
           </button>
           <br />
-          <button className='ui button' onClick={handleDifficulty}>
+          <button
+            className='ui button'
+            onClick={e => setRecettes({ ...recettes, difficulty: 'difficile' })}
+          >
             Difficile
           </button>
           <br />
@@ -91,23 +128,48 @@ const AddRecipeForm = () => {
 
         <div className='field'>
           <label htmlFor='prep-time'>Temps de préparation (en minutes)</label>
-          <input type='text' id='prep-time' />
+          <input
+            type='text'
+            id='prep-time'
+            onChange={e =>
+              setRecettes({ ...recettes, prepTime: e.currentTarget.value })
+            }
+            value={recettes.prepTime}
+          />
         </div>
         <div className='field'>
           <label htmlFor='rest-time'>Temps de repos (en minutes)</label>
-          <input type='text' id='rest-time' />
+          <input
+            type='text'
+            id='rest-time'
+            onChange={e =>
+              setRecettes({ ...recettes, restTime: e.currentTarget.value })
+            }
+            value={recettes.restTime}
+          />
         </div>
         <div className='field'>
           <label htmlFor='cooking-time'>Temps de cuisson(en minutes)</label>
-          <input type='text' id='cooking-time' />
+          <input
+            type='text'
+            id='cooking-time'
+            onChange={e =>
+              setRecettes({ ...recettes, cookingTime: e.currentTarget.value })
+            }
+            value={recettes.cookingTime}
+          />
         </div>
         <div className='field'>
           <label htmlFor='people-number'>Nombre de personnes</label>
-          <input type='text' id='people-number' />
+          <input
+            type='text'
+            id='people-number'
+            onChange={e =>
+              setRecettes({ ...recettes, persons: e.currentTarget.value })
+            }
+            value={recettes.persons}
+          />
         </div>
-        {/* <Ingredients /> */}
-        {/* <Cooking steps /> */}
-        {/* {showIngredients && <Ingredients data={ingredientsList} />} */}
         <h5>Ingrédients</h5>
         {ingredientsList.map((ingredient, i) => (
           <div className='ui form container segment' key={`ingredient-${i}`}>
@@ -243,7 +305,11 @@ const AddRecipeForm = () => {
             <input
               type='checkbox'
               name='inline'
-              // className='hidden'
+              checked={recettes.inline}
+              value={recettes.inline}
+              onChange={e =>
+                setRecettes({ ...recettes, inline: !recettes.inline })
+              }
             />
             <label>Mettre en ligne</label>
           </div>
@@ -254,3 +320,6 @@ const AddRecipeForm = () => {
   )
 }
 export default AddRecipeForm
+
+
+
