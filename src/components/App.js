@@ -12,9 +12,10 @@ import Recipe from './Recipe'
 function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
-  const [user, setUser] = useState()
-
-  console.log(user)
+  // const [user, setUser] = useState('')
+  const [user, setUser] = useState(
+    localStorage.getItem('userCredentials') || null
+  )
 
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)
@@ -45,7 +46,7 @@ function App() {
 
   const authenticate = email => {
     setUser(email)
-    }
+  }
 
   return (
     <div
@@ -62,7 +63,6 @@ function App() {
           showInscriptionModal={showInscriptionModal}
           hideInscriptionModal={hideInscriptionModal}
         />
-        
       )}
       {modalInscriptionIsShown && (
         <InscriptionForm
@@ -71,14 +71,15 @@ function App() {
         />
       )}
       <BrowserRouter>
-    
-        <Route path='/' exact strict component={Accueil} />
+        <Route path='/' exact strict render={() => <Accueil />} />
 
         <Route
           path='/profile'
           exact
           strict
-          render={() => <ProfileForm userDisconnect={userDisconnect} user={user}/>}
+          render={() => (
+            <ProfileForm userDisconnect={userDisconnect} user={user} />
+          )}
         />
 
         <Route

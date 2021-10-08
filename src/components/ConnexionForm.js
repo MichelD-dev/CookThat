@@ -30,6 +30,12 @@ const ConnexionForm = ({
 
       hideConnexionModal()
       authenticate(userCredential.user.auth.currentUser.email)
+
+      localStorage.setItem(
+        'userCredentials',
+        userCredential.user.auth.currentUser.email
+      )
+      console.log(userCredential.user.auth.currentUser.email)
     } catch (e) {
       setError(e.message)
     }
