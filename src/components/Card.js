@@ -1,4 +1,6 @@
-const Card = ({ image }) => {
+import { Link } from 'react-router-dom'
+
+const Card = ({ image, id }) => {
   return (
     <div
       className='ui card'
@@ -8,7 +10,7 @@ const Card = ({ image }) => {
         position: 'relative',
       }}
     >
-      <a href='/recette' className='image'>
+      <Link to={`/recette/${id}`} className='ui image'>
         <img
           src={image}
           alt='food'
@@ -19,7 +21,7 @@ const Card = ({ image }) => {
         />
 
         <div
-          className='ui extra content star rating'
+          className='ui star rating'
           data-rating='4'
           style={{
             position: 'absolute',
@@ -29,10 +31,8 @@ const Card = ({ image }) => {
             opacity: '.5',
             padding: '15px',
           }}
-        >
-          Rating
-        </div>
-      </a>
+        ></div>
+      </Link>
     </div>
   )
 }

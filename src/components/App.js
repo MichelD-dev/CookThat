@@ -88,7 +88,7 @@ function App() {
 
         <Route path='/favoris' exact strict render={() => <Favoris />} />
 
-        <Route path='/recette' exact strict render={() => <Recipe />} />
+        <Route path='/recette/:id' exact strict render={() => <Recipe />} />
 
         <Footer onShowModal={showConnexionModal} user={user} />
       </BrowserRouter>

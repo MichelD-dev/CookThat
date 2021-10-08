@@ -17,7 +17,7 @@ const Background = ({ onHideModal }) => {
   )
 }
 
-const Overlay = props => {
+const Overlay = ({ children }) => {
   return (
     <div
       style={{
@@ -36,7 +36,7 @@ const Overlay = props => {
           opacity: '1',
         }}
       >
-        {props.children}
+        {children}
       </div>
     </div>
   )

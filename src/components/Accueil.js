@@ -12,10 +12,10 @@ const Accueil = () => {
       </h2>
       <br />
       <div className='ui three stackable cards ' style={{ paddingBottom: '70px' }}>
-        <Card image={image1} />
-        <Card image={image2} />
-        <Card image={image1} />
-        <Card image={image3} />
+        <Card image={image1} id='0'/>
+        <Card image={image2} id='1'/>
+        <Card image={image1} id='2'/>
+        <Card image={image3} id='3'/>
       </div>
     </div>
   )
