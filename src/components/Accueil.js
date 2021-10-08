@@ -1,7 +1,7 @@
 import Card from './Card'
 import image1 from '../assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.jpg'
 import image2 from '../assets/images/caroline-attwood-bpPTlXWTOvg-unsplash.jpg'
-// import image3 from '../assets/images/jongsun-lee-JnFGgVaFpmE-unsplash.jpg'
+import image3 from '../assets/images/jongsun-lee-JnFGgVaFpmE-unsplash.jpg'
 
 const Accueil = () => {
   return (
@@ -15,6 +15,7 @@ const Accueil = () => {
         <Card image={image1} />
         <Card image={image2} />
         <Card image={image1} />
+        <Card image={image3} />
       </div>
     </div>
   )

@@ -18,8 +18,6 @@ const AddRecipeForm = () => {
     restTime: 0,
     cookingTime: 0,
     persons: 0,
-    ingredient: { ...ingredientsList },
-    etape: { ...etapesList },
     inline: false,
   })
 
@@ -30,8 +28,6 @@ const AddRecipeForm = () => {
       ...ingredientsList,
       { name: '', quantity: 0, unit: 'c.a.s' },
     ])
-    console.log(ingredientsList)
-    console.log(recettes.ingredient)
   }
 
   const ajouterEtape = e => {
@@ -72,9 +68,12 @@ const AddRecipeForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    console.warn(recettes)
-    const recette = await addDoc(collection(db, 'recipes'), recettes)
-    console.log(recette.name)
+
+    const recette = await addDoc(collection(db, 'recipes'), {
+      ...recettes,
+      ingredient: ingredientsList,
+      etape: etapesList,
+    })
   }
 
   return (
@@ -82,7 +81,7 @@ const AddRecipeForm = () => {
       <form
         onSubmit={handleSubmit}
         className='ui form container'
-        style={{ paddingBottom: '70px' }}
+        style={{ padding: '40px 0 100px', color: '#666' }}
       >
         <h2>Ajouter une recette</h2>
         <div className='field'>
@@ -97,8 +96,8 @@ const AddRecipeForm = () => {
           />
         </div>
         <h5>Photos</h5>
-        {/* <div className='ui segment'>{ <FileUpload /> }</div> */}
-        <div className='ui segment'>{ <Upload /> }</div>
+        <div className='ui segment'>{<FileUpload />}</div>
+        {/* <div className='ui segment'>{ <Upload /> }</div> */}
 
         <div className='ui fluid vertical buttons'>
           <h5>Difficulté</h5>
@@ -322,7 +321,12 @@ const AddRecipeForm = () => {
             <label>Mettre en ligne</label>
           </div>
         </div>
-        <button className='fluid ui large olive button'>Sauvegarder</button>
+        <button
+          className='fluid ui large olive button'
+          style={{ marginTop: '40px' }}
+        >
+          Sauvegarder
+        </button>
       </form>
     </>
   )

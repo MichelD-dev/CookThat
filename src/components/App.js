@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from 'react-router-dom'
+import { BrowserRouter, Link, Route, useHistory } from 'react-router-dom'
 import InscriptionForm from './InscriptionForm'
 import ConnexionForm from './ConnexionForm'
 import ProfileForm from './ProfileForm'
@@ -7,6 +7,7 @@ import Favoris from './Favoris'
 import Footer from './Footer'
 import Accueil from './Accueil'
 import { useState } from 'react'
+import Recipe from './Recipe'
 
 function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
@@ -39,7 +40,7 @@ function App() {
   const userDisconnect = e => {
     e.prevetDefault()
     setUser(null)
-    history.push('/')
+    // history.push('/')
   }
 
   const authenticate = email => {
@@ -61,6 +62,7 @@ function App() {
           showInscriptionModal={showInscriptionModal}
           hideInscriptionModal={hideInscriptionModal}
         />
+        
       )}
       {modalInscriptionIsShown && (
         <InscriptionForm
@@ -69,13 +71,14 @@ function App() {
         />
       )}
       <BrowserRouter>
+    
         <Route path='/' exact strict component={Accueil} />
 
         <Route
           path='/profile'
           exact
           strict
-          render={() => <ProfileForm userDisconnect={userDisconnect} />}
+          render={() => <ProfileForm userDisconnect={userDisconnect} user={user}/>}
         />
 
         <Route
@@ -86,6 +89,8 @@ function App() {
         />
 
         <Route path='/favoris' exact strict render={() => <Favoris />} />
+
+        <Route path='/recette' exact strict render={() => <Recipe />} />
 
         <Footer onShowModal={showConnexionModal} user={user} />
       </BrowserRouter>
