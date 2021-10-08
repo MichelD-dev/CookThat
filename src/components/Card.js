@@ -8,7 +8,7 @@ const Card = ({ image }) => {
         position: 'relative',
       }}
     >
-  <a href='/recette' className='image'>
+      <a href='/recette' className='image'>
         <img
           src={image}
           alt='food'
@@ -18,7 +18,20 @@ const Card = ({ image }) => {
           }}
         />
 
-        <div className='ui extra content star rating' data-rating='4' style={{position: 'absolute' , bottom: '10px', right: '0', backgroundColor: 'white', opacity: '.5', padding: '15px' }}>Rating</div>
+        <div
+          className='ui extra content star rating'
+          data-rating='4'
+          style={{
+            position: 'absolute',
+            bottom: '10px',
+            right: '0',
+            backgroundColor: 'white',
+            opacity: '.5',
+            padding: '15px',
+          }}
+        >
+          Rating
+        </div>
       </a>
     </div>
   )

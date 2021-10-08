@@ -22,6 +22,7 @@ const InscriptionForm = ({
         password
       )
       inscription(userCredential.user.auth.currentUser.email)
+      localStorage.setItem('userCredentials', userCredential.user.auth.currentUser.email)
       hideInscriptionModal()
     }
   }

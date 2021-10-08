@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, useHistory } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import InscriptionForm from './InscriptionForm'
 import ConnexionForm from './ConnexionForm'
 import ProfileForm from './ProfileForm'
@@ -12,10 +12,10 @@ import Recipe from './Recipe'
 function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
-  // const [user, setUser] = useState('')
-  const [user, setUser] = useState(
-    localStorage.getItem('userCredentials') || null
-  )
+  const [user, setUser] = useState('')
+  // const [user, setUser] = useState(
+  //   localStorage.getItem('userCredentials') || null
+  // )
 
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)
@@ -36,12 +36,9 @@ function App() {
     setUser(email)
   }
 
-  let history = useHistory()
-
   const userDisconnect = e => {
     e.prevetDefault()
     setUser(null)
-    // history.push('/')
   }
 
   const authenticate = email => {
