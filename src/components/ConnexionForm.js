@@ -3,16 +3,20 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useState } from 'react'
 import Modal from './Modal'
 
-const ConnexionForm = ({ hideConnexionModal, showInscriptionModal}) => {
+const ConnexionForm = ({
+  authenticate,
+  hideConnexionModal,
+  showInscriptionModal,
+}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
- 
-const inscriptionModal = e => {
-  e.preventDefault()
-  hideConnexionModal()
-  showInscriptionModal()
-}
+
+  const inscriptionModal = e => {
+    e.preventDefault()
+    hideConnexionModal()
+    showInscriptionModal()
+  }
 
   const send = async ev => {
     ev.preventDefault()
@@ -24,7 +28,8 @@ const inscriptionModal = e => {
         password
       )
 
-      console.log(userCredential.user)
+      hideConnexionModal()
+      authenticate(userCredential.user.auth.currentUser.email)
     } catch (e) {
       setError(e.message)
     }
@@ -54,7 +59,9 @@ const inscriptionModal = e => {
         <button className='fluid ui button'>Connexion</button>
         <br />
         <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
-          <a onClick={inscriptionModal} href='/inscription'>Créer un compte</a>
+          <a onClick={inscriptionModal} href='/inscription'>
+            Créer un compte
+          </a>
         </div>
       </form>
     </Modal>

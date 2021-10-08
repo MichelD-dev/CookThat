@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../firebase/firebase.js'
 import FileUpload from './FileUpload.js'
+import Upload from './Upload.js'
 // import Ingredients from './Ingredients'
 
 const AddRecipeForm = () => {
@@ -96,7 +97,8 @@ const AddRecipeForm = () => {
           />
         </div>
         <h5>Photos</h5>
-        <div className='ui icon input'>{/* <FileUpload /> */}</div>
+        {/* <div className='ui segment'>{ <FileUpload /> }</div> */}
+        <div className='ui segment'>{ <Upload /> }</div>
 
         <div className='ui fluid vertical buttons'>
           <h5>Difficulté</h5>
@@ -111,7 +113,7 @@ const AddRecipeForm = () => {
           </button>
           <br />
           <button
-            className='ui button'
+            className='ui toggle button'
             onClick={e => {
               e.preventDefault()
               setRecettes({ ...recettes, difficulty: 'moyen' })

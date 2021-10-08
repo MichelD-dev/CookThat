@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, useHistory } from 'react-router-dom'
 import InscriptionForm from './InscriptionForm'
 import ConnexionForm from './ConnexionForm'
 import ProfileForm from './ProfileForm'
@@ -12,6 +12,8 @@ function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
   const [user, setUser] = useState()
+
+  console.log(user)
 
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)
@@ -28,6 +30,22 @@ function App() {
     setModalInscriptionIsShown(false)
   }
 
+  const inscription = email => {
+    setUser(email)
+  }
+
+  let history = useHistory()
+
+  const userDisconnect = e => {
+    e.prevetDefault()
+    setUser(null)
+    history.push('/')
+  }
+
+  const authenticate = email => {
+    setUser(email)
+    }
+
   return (
     <div
       style={{
@@ -38,19 +56,27 @@ function App() {
     >
       {modalConnexionIsShown && (
         <ConnexionForm
+          authenticate={authenticate}
           hideConnexionModal={hideConnexionModal}
           showInscriptionModal={showInscriptionModal}
           hideInscriptionModal={hideInscriptionModal}
         />
       )}
       {modalInscriptionIsShown && (
-        <InscriptionForm hideInscriptionModal={hideInscriptionModal} />
+        <InscriptionForm
+          inscription={inscription}
+          hideInscriptionModal={hideInscriptionModal}
+        />
       )}
       <BrowserRouter>
-
         <Route path='/' exact strict component={Accueil} />
 
-        <Route path='/profile' exact strict render={() => <ProfileForm />} />
+        <Route
+          path='/profile'
+          exact
+          strict
+          render={() => <ProfileForm userDisconnect={userDisconnect} />}
+        />
 
         <Route
           path='/addrecipe'
@@ -62,7 +88,6 @@ function App() {
         <Route path='/favoris' exact strict render={() => <Favoris />} />
 
         <Footer onShowModal={showConnexionModal} user={user} />
-
       </BrowserRouter>
     </div>
   )

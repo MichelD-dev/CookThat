@@ -3,13 +3,17 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { useState } from 'react'
 import Modal from './Modal'
 
-const InscriptionForm = ({ onHideModal, hideInscriptionModal }) => {
+const InscriptionForm = ({
+  inscription,
+  onHideModal,
+  hideInscriptionModal,
+}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
 
-  const send = async ev => {
-    ev.preventDefault()
+  const send = async e => {
+    e.preventDefault()
 
     if (password === password2) {
       const userCredential = await createUserWithEmailAndPassword(
@@ -17,7 +21,8 @@ const InscriptionForm = ({ onHideModal, hideInscriptionModal }) => {
         email,
         password
       )
-      console.log(userCredential.user)
+      inscription(userCredential.user.auth.currentUser.email)
+      hideInscriptionModal()
     }
   }
 

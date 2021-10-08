@@ -1,4 +1,4 @@
-const ProfileForm = () => {
+const ProfileForm = ({userDisconnect}) => {
   return (
     <>
       <form className='ui form container'>
@@ -27,6 +27,10 @@ const ProfileForm = () => {
         <button className='ui button' type='submit'>
           Mettre à jour mes informations
         </button>
+        <br/>
+        <button className='mini ui primary basic button' onClick={userDisconnect} style={{marginTop: '30px'}}>
+            Déconnexion
+          </button>
       </form>
     </>
   )
