@@ -2,6 +2,7 @@ import { auth } from '../firebase/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { useState } from 'react'
 import Modal from './Modal'
+import { Button, Form } from 'semantic-ui-react'
 
 const InscriptionForm = ({
   inscription,
@@ -22,41 +23,47 @@ const InscriptionForm = ({
         password
       )
       inscription(userCredential.user.auth.currentUser.email)
-      localStorage.setItem('userCredentials', userCredential.user.auth.currentUser.email)
+      localStorage.setItem(
+        'userCredentials',
+        userCredential.user.auth.currentUser.email
+      )
       hideInscriptionModal()
     }
   }
 
   return (
     <Modal onHideModal={hideInscriptionModal}>
-      <form className='ui form container' onSubmit={send}>
+      <Form onSubmit={send}>
         <h3 style={{ textAlign: 'center' }}>Inscription</h3>
-        <div className='field'>
+        <Form.Field required>
           <label htmlFor='email'>Email:</label>
           <input
             type='email'
             id='email'
             onChange={e => setEmail(e.currentTarget.value)}
           />
-        </div>
-        <div className='field'>
+        </Form.Field>
+        <Form.Field required>
           <label htmlFor='password'>Mot de passe:</label>
           <input
             type='password'
             id='password'
             onChange={e => setPassword(e.currentTarget.value)}
           />
-        </div>
-        <div className='field'>
+        </Form.Field>
+        <Form.Field required>
           <label htmlFor='password2'>Répétez votre mot de passe:</label>
           <input
             type='password'
             id='password2'
             onChange={e => setPassword2(e.currentTarget.value)}
           />
-        </div>
-        <button className='fluid ui button'>S'inscrire</button>
-      </form>
+        </Form.Field>
+        <br />
+        <Form.Checkbox inline label='Vous devez accepter les CGU' required />
+        <br />
+        <Button fluid>S'inscrire</Button>
+      </Form>
     </Modal>
   )
 }

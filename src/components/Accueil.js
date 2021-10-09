@@ -16,6 +16,7 @@ const Accueil = ({imageUrl}) => {
         <Card image={image2} id='1'/>
         <Card image={image1} id='2'/>
         <Card image={image3} id='3'/>
+        <Card image={image3} id='4'/>
       </div>
     </div>
   )

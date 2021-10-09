@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom'
+import { Button, Container, Form } from 'semantic-ui-react'
 
 const ProfileForm = ({ userDisconnect, user }) => {
   const history = useHistory()
@@ -8,50 +9,40 @@ const ProfileForm = ({ userDisconnect, user }) => {
   }
 
   return (
-    <>
-      <form
-        className='ui form container'
-        style={{ padding: '40px 0 100px', color: '#666' }}
-      >
+    <Container>
+      <Form style={{ padding: '40px 0 100px', color: '#666' }}>
         <h2>Mon profil</h2>
         <br />
-        <button className='ui button' type='button'>
-          Mes recettes
-        </button>
-        <button
-          className='ui button'
-          type='button'
-          onClick={() => history.push('/favoris')}
-        >
-          Mes favoris
-        </button>
-        <div className='field'>
+        <Button>Mes recettes</Button>
+        <Button onClick={() => history.push('/favoris')}>Mes favoris</Button>
+        <Form.Field readOnly>
+          {/*TODO Faire apparaitre le User.email en dur dans le champ*/}
           <br />
           <label htmlFor='email'>Email:</label>
-          <input type='email' id='email' />
-        </div>
-        <div className='field'>
+          <Form.Input readOnly type='email' id='email' />
+        </Form.Field>
+        <Form.Field>
           <label htmlFor='user'>Nom d'utilisateur:</label>
           <input type='text' id='user' />
-        </div>
-        <div className='field'>
+        </Form.Field>
+        <Form.Field>
           <label htmlFor='password'>Nouveau mot de passe:</label>
           <input type='password' id='password' />
-        </div>
+        </Form.Field>
         <br />
-        <button className='ui button' type='submit'>
-          Mettre à jour mes informations
-        </button>
+        <Button type='submit'>Mettre à jour mes informations</Button>
         <br />
-        <button
-          className='mini ui primary basic button'
+        <Button
+          basic
+          color='blue'
+          size='mini'
           onClick={userDisconnect}
           style={{ marginTop: '30px' }}
         >
           Déconnexion
-        </button>
-      </form>
-    </>
+        </Button>
+      </Form>
+    </Container>
   )
 }
 

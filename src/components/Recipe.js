@@ -1,10 +1,11 @@
 import { collection, getDocs } from 'firebase/firestore'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { Loader } from 'semantic-ui-react'
 
 import { db } from '../firebase/firebase'
 
-const Recipe = props => {
+const Recipe = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState('')
 
@@ -16,13 +17,13 @@ const Recipe = props => {
       try {
         const querySnaphot = await getDocs(collectionRef)
 
-        // On obtient un tableau de tous les objets recette
         const recipes = querySnaphot.docs.map(doc => ({
+          // Tableau de tous les objets 'recette'
           id: doc.id,
           ...doc.data(),
         }))
-
         setData(recipes)
+        console.log(recipes)
       } catch (e) {
         setError(e.message)
       }
@@ -32,7 +33,7 @@ const Recipe = props => {
   }, [])
 
   if (!data[id]) {
-    return <p>Chargement ...</p>
+    return <Loader indeterminate active size='big' content='Chargement...' />
   }
 
   return (
@@ -63,13 +64,9 @@ const Recipe = props => {
             Number(data[id].cookingTime)}{' '}
           mns
         </p>
-        <p>
-          Préparation: {data[id].prepTime ? data[id].prepTime + ' mns' : null}
-        </p>
-        <p>Repos: {data[id].restTime ? data[id].restTime + ' mns' : null}</p>
-        <p>
-          Cuisson: {data[id].cookingTime ? data[id].cookingTime + ' mns' : null}
-        </p>
+        <p>Préparation: {data[id].prepTime + ' mns' || null}</p>
+        <p>Repos: {data[id].restTime + ' mns' || null}</p>
+        <p>Cuisson: {data[id].cookingTime + ' mns' || null}</p>
       </div>
       <ul>
         {data[id].etape.map(etape => (
@@ -79,10 +76,5 @@ const Recipe = props => {
     </div>
   )
 }
-
-// Un composant :
-// - Une fonction, qui accépte des props et des children
-// - Elle doit commencer par une majuscule
-// - Elle doit retourner du JSX
 
 export default Recipe

@@ -11,13 +11,12 @@ const Background = ({ onHideModal }) => {
         width: '100%',
         height: '100vh',
         zIndex: 20,
-        backgroundColor: 'rgba(200, 255, 255, 0)',
       }}
     ></div>
   )
 }
 
-const Overlay = ({ children }) => {
+const Modale = ({ children }) => {
   return (
     <div
       style={{
@@ -48,7 +47,7 @@ const Modal = ({ onHideModal, children }) => {
   return (
     <>
       {createPortal(<Background onHideModal={onHideModal} />, modal)}
-      {createPortal(<Overlay>{children} </Overlay>, modal)}
+      {createPortal(<Modale>{children} </Modale>, modal)}
     </>
   )
 }

@@ -2,7 +2,7 @@ import { useDropzone } from 'react-dropzone'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages } from '@fortawesome/free-solid-svg-icons'
 
-function Upload(props) {
+function Upload() {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone()
 
   const files = acceptedFiles.map(file => (

@@ -8,18 +8,20 @@ import Footer from './Footer'
 import Accueil from './Accueil'
 import { useState } from 'react'
 import Recipe from './Recipe'
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
   const [imageUrl, setImageUrl] = useState('')
   const [user, setUser] = useState(
-    localStorage.getItem('userCredentials') || null
+    null
+    // localStorage.getItem('userCredentials') || null
   )
   const imgUrl = url => {
     setImageUrl(url)
   }
-
+console.log(imageUrl);
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)
   }
