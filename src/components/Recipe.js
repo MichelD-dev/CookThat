@@ -35,7 +35,6 @@ const Recipe = props => {
     return <p>Chargement ...</p>
   }
 
-  // console.log(data)
   return (
     <div className='ui container'>
       {/* { <img
@@ -65,11 +64,11 @@ const Recipe = props => {
           mns
         </p>
         <p>
-          Préparation: {data[id].prepTime ? data[id].prepTime + 'mns' : null}
+          Préparation: {data[id].prepTime ? data[id].prepTime + ' mns' : null}
         </p>
-        <p>Repos: {data[id].restTime ? data[id].restTime + 'mns' : null}</p>
+        <p>Repos: {data[id].restTime ? data[id].restTime + ' mns' : null}</p>
         <p>
-          Cuisson: {data[id].cookingTime ? data[id].cookingTime + 'mns' : null}
+          Cuisson: {data[id].cookingTime ? data[id].cookingTime + ' mns' : null}
         </p>
       </div>
       <ul>

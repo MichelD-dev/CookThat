@@ -4,31 +4,42 @@ import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../firebase/firebase.js'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { storage } from '../firebase/firebase'
-import Upload from './Upload.js'
+import { useDropzone } from 'react-dropzone'
+import { format } from 'date-format-parse'
 // import Ingredients from './Ingredients'
 
-const AddRecipeForm = () => {
+const AddRecipeForm = ({ imgUrl }) => {
   const history = useHistory()
   const [file, setFile] = useState(null)
   const [etapesList, setEtapesList] = useState([{ description: '' }])
   const [error, setError] = useState('')
   const [ingredientsList, setIngredientsList] = useState([
-    { name: '', quantity: 0, unit: 'c.a.s' },
+    { name: '', quantity: null, unit: 'c.a.s' },
   ])
   const [recettes, setRecettes] = useState({
     name: '',
     photo: '',
     difficulty: '',
-    prepTime: 0,
-    restTime: 0,
-    cookingTime: 0,
-    persons: 0,
+    prepTime: null,
+    restTime: null,
+    cookingTime: null,
+    persons: null,
     inline: false,
+    date: format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
   })
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone()
+
+  const files = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ))
 
   const handleFile = async e => {
     e.preventDefault()
-    setFile(e.target.files[0])
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0])
+    }
   }
 
   const ajouterIngredient = e => {
@@ -79,31 +90,29 @@ const AddRecipeForm = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
-    // try {
-    if (!file) return
+    try {
+      if (!file) return
 
-    // on crée une référence vers le fichier dans firebase
-    const imgRef = ref(storage, file.name)
+      // on crée une référence vers le fichier dans firebase
+      const imgRef = ref(storage, file.name)
 
-    // On upload l'image
-    const snapshot = await uploadBytes(imgRef, file)
+      // On upload l'image
+      const snapshot = await uploadBytes(imgRef, file)
 
-    // On récupère le lien (l'url de l'image)
-    const url = await getDownloadURL(snapshot.ref)
-    console.log(url)
+      // On récupère le lien (l'url de l'image)
+      const url = await getDownloadURL(snapshot.ref)
 
-    const recette = await addDoc(collection(db, 'recipes'), {
-      ...recettes,
-      ingredient: ingredientsList,
-      etape: etapesList,
-      photo: url,
-    })
-
-    history.push('/')
-
-    // } catch (e) {
-    //   setError(e.message)
-    // }
+      const recette = await addDoc(collection(db, 'recipes'), {
+        ...recettes,
+        ingredient: ingredientsList,
+        etape: etapesList,
+        photo: url,
+      })
+      imgUrl(url)
+      history.push('/')
+    } catch (e) {
+      setError(e.message)
+    }
   }
 
   return (
@@ -126,12 +135,39 @@ const AddRecipeForm = () => {
           />
         </div>
         <h5>Photos</h5>
-        <div className='ui segment'>
-          {' '}
-          <input type='file' onChange={handleFile} />
-        </div>
-        <div className='ui segment'>{ <Upload /> }</div>
+        <section className='ui segment'>
+          <div
+            {...getRootProps({ className: 'dropzone' })}
+            style={{
+              height: '100px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <input {...getInputProps()} onChange={handleFile} />
+            {file ? (
+              <div className='ui fluid rounded image'>
+                <img
+                  src={`${URL.createObjectURL(file)}`}
+                  alt='recette'
+                  style={{
+                    objectFit: 'cover',
+                    height: '100%',
+                  }}
+                />
+              </div>
+            ) : (
+              <h4
+                style={{ color: '#666', textAlign: 'center', marginTop: '0px' }}
+              >
+                <i className='images outline huge disabled icon '></i>
 
+                <div>Ajouter une photo</div>
+              </h4>
+            )}
+          </div>
+        </section>
         <div className='ui fluid vertical buttons'>
           <h5>Difficulté</h5>
           <button

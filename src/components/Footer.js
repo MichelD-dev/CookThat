@@ -1,11 +1,4 @@
 import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faHouseChimney,
-  faSquarePlus,
-  faHeart,
-  faUserLarge,
-} from '@fortawesome/free-solid-svg-icons'
 
 const Footer = ({ onShowModal, user }) => {
   const checkUserStatus = e => {
@@ -32,7 +25,9 @@ const Footer = ({ onShowModal, user }) => {
       {/*---------------------------------------------------------*/}
 
       <Link to='/' className='ui basic button item'>
-        <FontAwesomeIcon icon={faHouseChimney} size='2x' color='#333' />
+        <div>
+          <i className='home black big icon '></i>
+        </div>
       </Link>
 
       {/*---------------------------------------------------------*/}
@@ -43,7 +38,9 @@ const Footer = ({ onShowModal, user }) => {
         to='/addrecipe'
         className='ui basic button item'
       >
-        <FontAwesomeIcon icon={faSquarePlus} size='2x' color='#333' />
+        <div>
+          <i className='plus square black big icon'></i>
+        </div>
       </Link>
 
       {/*---------------------------------------------------------*/}
@@ -61,7 +58,9 @@ const Footer = ({ onShowModal, user }) => {
         to='/favoris'
         className='ui basic button item'
       >
-        <FontAwesomeIcon icon={faHeart} size='2x' color='#333' />
+        <div>
+          <i className='heart black big icon'></i>
+        </div>
       </Link>
 
       {/*---------------------------------------------------------*/}
@@ -72,7 +71,9 @@ const Footer = ({ onShowModal, user }) => {
         to='/profile'
         className='ui basic button item'
       >
-        <FontAwesomeIcon icon={faUserLarge} size='2x' color='#333' />
+        <div>
+          <i className='user black big icon'></i>
+        </div>
       </Link>
 
       {/*---------------------------------------------------------*/}

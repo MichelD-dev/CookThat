@@ -12,10 +12,13 @@ import Recipe from './Recipe'
 function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
-  const [user, setUser] = useState('t')
-  // const [user, setUser] = useState(
-  //   localStorage.getItem('userCredentials') || null
-  // )
+  const [imageUrl, setImageUrl] = useState('')
+  const [user, setUser] = useState(
+    localStorage.getItem('userCredentials') || null
+  )
+  const imgUrl = url => {
+    setImageUrl(url)
+  }
 
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)
@@ -37,7 +40,6 @@ function App() {
   }
 
   const userDisconnect = e => {
-    e.prevetDefault()
     setUser(null)
   }
 
@@ -68,7 +70,7 @@ function App() {
         />
       )}
       <BrowserRouter>
-        <Route path='/' exact strict render={() => <Accueil />} />
+        <Route path='/' exact strict render={() => <Accueil imageUrl={imageUrl} />} />
 
         <Route
           path='/profile'
@@ -83,10 +85,10 @@ function App() {
           path='/addrecipe'
           exact
           strict
-          render={() => <AddRecipeForm />}
+          render={() => <AddRecipeForm imgUrl={imgUrl} />}
         />
 
-        <Route path='/favoris' exact strict render={() => <Favoris />} />
+        <Route path='/favoris' exact strict render={() => <Favoris imageUrl={imageUrl}/>} />
 
         <Route path='/recette/:id' exact strict render={() => <Recipe />} />
 

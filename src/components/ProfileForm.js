@@ -1,9 +1,11 @@
-import { Redirect } from "react-router"
+import { useHistory } from 'react-router-dom'
 
 const ProfileForm = ({ userDisconnect, user }) => {
-if (!user) {
-  return <Redirect to='/'/>
-}
+  const history = useHistory()
+
+  if (!user) {
+    history.push('/')
+  }
 
   return (
     <>
@@ -16,7 +18,11 @@ if (!user) {
         <button className='ui button' type='button'>
           Mes recettes
         </button>
-        <button className='ui button' type='button'>
+        <button
+          className='ui button'
+          type='button'
+          onClick={() => history.push('/favoris')}
+        >
           Mes favoris
         </button>
         <div className='field'>
