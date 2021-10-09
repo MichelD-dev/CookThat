@@ -4,6 +4,9 @@ import image2 from '../assets/images/caroline-attwood-bpPTlXWTOvg-unsplash.jpg'
 import image3 from '../assets/images/jongsun-lee-JnFGgVaFpmE-unsplash.jpg'
 
 const Accueil = () => {
+
+
+
   return (
     <div className='ui container'>
       <div className="ui star rating" data-rating="3"></div>

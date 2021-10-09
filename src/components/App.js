@@ -12,7 +12,7 @@ import Recipe from './Recipe'
 function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState('t')
   // const [user, setUser] = useState(
   //   localStorage.getItem('userCredentials') || null
   // )

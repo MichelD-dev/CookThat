@@ -1,12 +1,17 @@
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../firebase/firebase.js'
-import FileUpload from './FileUpload.js'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { storage } from '../firebase/firebase'
 import Upload from './Upload.js'
 // import Ingredients from './Ingredients'
 
 const AddRecipeForm = () => {
+  const history = useHistory()
+  const [file, setFile] = useState(null)
   const [etapesList, setEtapesList] = useState([{ description: '' }])
+  const [error, setError] = useState('')
   const [ingredientsList, setIngredientsList] = useState([
     { name: '', quantity: 0, unit: 'c.a.s' },
   ])
@@ -20,6 +25,11 @@ const AddRecipeForm = () => {
     persons: 0,
     inline: false,
   })
+
+  const handleFile = async e => {
+    e.preventDefault()
+    setFile(e.target.files[0])
+  }
 
   const ajouterIngredient = e => {
     e.preventDefault()
@@ -69,11 +79,31 @@ const AddRecipeForm = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
+    // try {
+    if (!file) return
+
+    // on crée une référence vers le fichier dans firebase
+    const imgRef = ref(storage, file.name)
+
+    // On upload l'image
+    const snapshot = await uploadBytes(imgRef, file)
+
+    // On récupère le lien (l'url de l'image)
+    const url = await getDownloadURL(snapshot.ref)
+    console.log(url)
+
     const recette = await addDoc(collection(db, 'recipes'), {
       ...recettes,
       ingredient: ingredientsList,
       etape: etapesList,
+      photo: url,
     })
+
+    history.push('/')
+
+    // } catch (e) {
+    //   setError(e.message)
+    // }
   }
 
   return (
@@ -96,8 +126,11 @@ const AddRecipeForm = () => {
           />
         </div>
         <h5>Photos</h5>
-        <div className='ui segment'>{<FileUpload />}</div>
-        {/* <div className='ui segment'>{ <Upload /> }</div> */}
+        <div className='ui segment'>
+          {' '}
+          <input type='file' onChange={handleFile} />
+        </div>
+        <div className='ui segment'>{ <Upload /> }</div>
 
         <div className='ui fluid vertical buttons'>
           <h5>Difficulté</h5>
@@ -321,6 +354,7 @@ const AddRecipeForm = () => {
             <label>Mettre en ligne</label>
           </div>
         </div>
+        {error && <p>{error}</p>}
         <button
           className='fluid ui large olive button'
           style={{ marginTop: '40px' }}
