@@ -2,7 +2,7 @@ import { auth } from '../firebase/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useState } from 'react'
 import Modal from './Modal'
-import { Button, Form} from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 
 const ConnexionForm = ({
   authenticate,

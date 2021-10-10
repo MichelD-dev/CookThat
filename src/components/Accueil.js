@@ -3,14 +3,13 @@ import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../firebase/firebase.js'
 import { useEffect, useState } from 'react'
 
-const Accueil = ({ imageUrl }) => {
+const Accueil = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState('')
 
   useEffect(() => {
-    const getRecipe = async e => {
-      // e.preventDefault()
-      try {
+    const getRecipe = async () => {
+        try {
         const querySnapshot = await getDocs(collection(db, 'recipes'))
         const cards = querySnapshot.docs.map(doc => ({
           // Tableau de tous les objets 'recette'
@@ -33,7 +32,7 @@ const Accueil = ({ imageUrl }) => {
       <br />
       <div className='ui three stackable cards '>
         {data.map((card, id) => (
-          <Card key={id} name={data[id].name} image={data[id].photo} id={id} difficulty={data[id].difficulty}  tps={data[id].cookingTime}/>
+          <Card key={data[id].id} name={data[id].name} image={data[id].photo} id={id} difficulty={data[id].difficulty}  tps={data[id].cookingTime}/>
         ))}
       </div>
     </div>

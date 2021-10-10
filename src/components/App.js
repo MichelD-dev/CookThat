@@ -13,17 +13,10 @@ import 'semantic-ui-css/semantic.min.css'
 function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
-  const [imageUrl, setImageUrl] = useState('')
   const [user, setUser] = useState(
-    // null
-    localStorage.getItem('userCredentials') || null
+    null
+    // localStorage.getItem('userCredentials') || null
   )
-
-  const imgUrl = url => {
-    setImageUrl(url)
-  }
-
-  console.log(imageUrl)
 
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)
@@ -75,12 +68,7 @@ function App() {
         />
       )}
       <BrowserRouter>
-        <Route
-          path='/'
-          exact
-          strict
-          render={() => <Accueil imageUrl={imageUrl} />}
-        />
+        <Route path='/' exact strict render={() => <Accueil />} />
 
         <Route
           path='/profile'
@@ -95,15 +83,10 @@ function App() {
           path='/addrecipe'
           exact
           strict
-          render={() => <AddRecipeForm imgUrl={imgUrl} />}
+          render={() => <AddRecipeForm />}
         />
 
-        <Route
-          path='/favoris'
-          exact
-          strict
-          render={() => <Favoris imageUrl={imageUrl} />}
-        />
+        <Route path='/favoris' exact strict render={() => <Favoris />} />
 
         <Route path='/recette/:id' exact strict render={() => <Recipe />} />
 

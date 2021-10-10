@@ -16,18 +16,17 @@ const ProfileForm = ({ userDisconnect, user }) => {
         <Button>Mes recettes</Button>
         <Button onClick={() => history.push('/favoris')}>Mes favoris</Button>
         <Form.Field readOnly>
-          {/*TODO Faire apparaitre le User.email en dur dans le champ*/}
           <br />
           <label htmlFor='email'>Email:</label>
-          <Form.Input readOnly type='email' id='email' />
+          <Form.Input placeholder={user} readOnly type='email' id='email' />
         </Form.Field>
-        <Form.Field>
+        <Form.Field required>
           <label htmlFor='user'>Nom d'utilisateur:</label>
-          <input type='text' id='user' />
+          <Form.Input type='text' id='user' />
         </Form.Field>
-        <Form.Field>
+        <Form.Field required>
           <label htmlFor='password'>Nouveau mot de passe:</label>
-          <input type='password' id='password' />
+          <Form.Input type='password' id='password' />
         </Form.Field>
         <br />
         <Button type='submit'>Mettre à jour mes informations</Button>

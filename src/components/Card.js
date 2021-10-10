@@ -37,16 +37,15 @@ const Card = ({ name, image, id, difficulty, tps }) => {
           top: '15px',
           left: '0',
           backgroundColor: 'rgba(255, 255, 255, 0.6)',
-          padding: '12px 12px',
+          padding: '10px 12px',
           borderRadius: '0 7px 7px 0',
           color: '#444',
           fontWeight: 'bold',
           userSelect: 'none',
         }}
       >
-        {/* <h3>{name}</h3>  */}
-        {/*FIXME dans Favoris.js */}
-        <h3>{name}</h3>
+        {/* <h3>{name}</h3> */}
+        <h3>Poulet à la moutarde</h3>
       </div>
 
       <div
@@ -61,7 +60,7 @@ const Card = ({ name, image, id, difficulty, tps }) => {
           userSelect: 'none',
         }}
       >
-        {difficulty}
+        {/* {difficulty} */}
         difficile
       </div>
       <Rating
@@ -89,7 +88,7 @@ const Card = ({ name, image, id, difficulty, tps }) => {
         }}
       >
         20 mns
-        {tps}
+        {/* {tps} */}
       </div>
       <Rating
         icon='star'
@@ -100,7 +99,7 @@ const Card = ({ name, image, id, difficulty, tps }) => {
           bottom: '10px',
           right: '0',
           backgroundColor: 'rgba(255, 255, 255, 0.6)',
-          padding: '11px',
+          padding: '10px',
           borderRadius: '7px 0 0 7px',
         }}
       />
