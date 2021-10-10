@@ -13,6 +13,8 @@ import {
   Select,
   TextArea,
   Label,
+  Segment,
+  Image,
 } from 'semantic-ui-react'
 // import Ingredients from './Ingredients'
 
@@ -117,14 +119,10 @@ const AddRecipeForm = ({ imgUrl }) => {
         ...recettes,
         ingredient: ingredientsList,
         etape: etapesList,
-        photo: url || null,
+        photo: url,
       })
       imgUrl(url)
-
-      // setRecettes({
-
-      // })
-
+      console.log(recettes)
       history.push('/')
     } catch (e) {
       setError(e.message)
@@ -151,28 +149,29 @@ const AddRecipeForm = ({ imgUrl }) => {
             />
           </div>
           <h5>Photos</h5>
-          <section className='ui segment'>
-            <div
+          <Segment >
+            <div // FIXME padding Segment non modifiable
               {...getRootProps({ className: 'dropzone' })}
               style={{
                 height: '200px',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                overflow: 'hidden'
               }}
             >
-              <input {...getInputProps()} onChange={handleFile} />
+              <input {...getInputProps()} onChange={handleFile}/>
               {file ? (
-                <div className='ui fluid rounded image'>
+                <Image fluid rounded >
                   <img
                     src={`${URL.createObjectURL(file)}`}
                     alt='recette'
                     style={{
-                      objectFit: 'cover',
-                      height: '100%',
+                      // objectFit: 'cover',
+                      // height: '100%',
                     }}
                   />
-                </div>
+                </Image>
               ) : (
                 <h4
                   style={{
@@ -185,7 +184,7 @@ const AddRecipeForm = ({ imgUrl }) => {
                 </h4>
               )}
             </div>
-          </section>
+          </Segment>
           <div className='ui fluid vertical buttons'>
             <h5>Difficulté</h5>
             <Container>
@@ -290,7 +289,7 @@ const AddRecipeForm = ({ imgUrl }) => {
                 // }}
               >
                 {/* <div className='fields' style={{ marginBottom: '20px' }}> */}
-                <Form.Group vertical>
+                <Form.Group vertical> {/*//FIXME*/}
                   {/* <div className=' field'> */}
                   <label htmlFor='quantity'>Quantité</label>
                   <input
@@ -306,7 +305,9 @@ const AddRecipeForm = ({ imgUrl }) => {
                   />
                   {/* </div> */}
                 </Form.Group>
-                <Form.Group vertical> {/*FIXME */}
+                <Form.Group vertical>
+                  {' '}
+                  {/*FIXME */}
                   {/* <div className=' field'> */}
                   <label htmlFor='unit'>Mesure</label>
                   <Select
@@ -319,14 +320,23 @@ const AddRecipeForm = ({ imgUrl }) => {
                     }
                     value={ingredient.unit}
                     options={[
-                      { value: 'c.a.s.', text: 'cuillères à soupe' },
-                      { value: 'c.a.c', text: 'cuillères à café' },
                       {
+                        key: 'c.a.s',
+                        value: 'c.a.s.',
+                        text: 'cuillères à soupe',
+                      },
+                      {
+                        key: 'c.a.c',
+                        value: 'c.a.c',
+                        text: 'cuillères à café',
+                      },
+                      {
+                        key: 'cl',
                         value: 'centilitres',
                         text: 'centilitres',
                       },
-                      { value: 'grammes', text: 'grammes' },
-                      { value: '', text: 'portions' },
+                      { key: 'g', value: 'grammes', text: 'grammes' },
+                      { key: 'portions', value: '', text: 'portions' },
                     ]}
                   ></Select>
                   {/* </div> */}

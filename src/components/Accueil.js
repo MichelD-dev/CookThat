@@ -1,22 +1,40 @@
 import Card from './Card'
-import image1 from '../assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.jpg'
-import image2 from '../assets/images/caroline-attwood-bpPTlXWTOvg-unsplash.jpg'
-import image3 from '../assets/images/jongsun-lee-JnFGgVaFpmE-unsplash.jpg'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../firebase/firebase.js'
+import { useEffect, useState } from 'react'
 
-const Accueil = ({imageUrl}) => {
+const Accueil = ({ imageUrl }) => {
+  const [data, setData] = useState([])
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const getRecipe = async e => {
+      // e.preventDefault()
+      try {
+        const querySnapshot = await getDocs(collection(db, 'recipes'))
+        const cards = querySnapshot.docs.map(doc => ({
+          // Tableau de tous les objets 'recette'
+          id: doc.id,
+          ...doc.data(),
+        }))
+        setData(cards)
+      } catch (e) {
+        setError(e.message)
+      }
+    }
+    getRecipe()
+  }, [])
+
   return (
     <div className='ui container'>
-      <div className="ui star rating" data-rating="3"></div>
       <h2 style={{ margin: ' 20px 0', color: '#666' }}>
         Nos dernières recettes
       </h2>
       <br />
-      <div className='ui three stackable cards ' style={{ paddingBottom: '70px' }}>
-        <Card image={imageUrl} id='0'/>
-        <Card image={image2} id='1'/>
-        <Card image={image1} id='2'/>
-        <Card image={image3} id='3'/>
-        <Card image={image3} id='4'/>
+      <div className='ui three stackable cards '>
+        {data.map((card, id) => (
+          <Card key={id} name={data[id].name} image={data[id].photo} id={id} difficulty={data[id].difficulty}  tps={data[id].cookingTime}/>
+        ))}
       </div>
     </div>
   )

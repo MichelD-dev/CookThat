@@ -18,10 +18,13 @@ function App() {
     // null
     localStorage.getItem('userCredentials') || null
   )
+
   const imgUrl = url => {
     setImageUrl(url)
   }
-console.log(imageUrl);
+
+  console.log(imageUrl)
+
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)
   }
@@ -72,7 +75,12 @@ console.log(imageUrl);
         />
       )}
       <BrowserRouter>
-        <Route path='/' exact strict render={() => <Accueil imageUrl={imageUrl} />} />
+        <Route
+          path='/'
+          exact
+          strict
+          render={() => <Accueil imageUrl={imageUrl} />}
+        />
 
         <Route
           path='/profile'
@@ -90,7 +98,12 @@ console.log(imageUrl);
           render={() => <AddRecipeForm imgUrl={imgUrl} />}
         />
 
-        <Route path='/favoris' exact strict render={() => <Favoris imageUrl={imageUrl}/>} />
+        <Route
+          path='/favoris'
+          exact
+          strict
+          render={() => <Favoris imageUrl={imageUrl} />}
+        />
 
         <Route path='/recette/:id' exact strict render={() => <Recipe />} />
 

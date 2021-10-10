@@ -4,7 +4,6 @@ import image2 from '../assets/images/caroline-attwood-bpPTlXWTOvg-unsplash.jpg'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../firebase/firebase'
 import { useEffect, useState } from 'react'
-// import image3 from '../assets/images/jongsun-lee-JnFGgVaFpmE-unsplash.jpg'
 
 const Favoris = ({imageUrl}) => {
   const [data, setData] = useState([])

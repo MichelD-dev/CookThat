@@ -1,6 +1,6 @@
 import { Rating, Card as Cart, Image, Label } from 'semantic-ui-react'
 
-const Card = ({ image, id }) => {
+const Card = ({ name, image, id, difficulty, tps }) => {
   return (
     <Cart
       style={{
@@ -12,13 +12,15 @@ const Card = ({ image, id }) => {
       <div
         style={{
           overflow: 'hidden',
-          height: '240px',
+          height: '200px',
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'center',
+          // objectFit: 'contain',
         }}
       >
         {image ? (
-          <Image src={image} as='a' href={`/recette/${id}`} />
+          <Image fluid src={image} as='a' href={`/recette/${id}`} />
         ) : (
           <Image
             as='a'
@@ -44,7 +46,7 @@ const Card = ({ image, id }) => {
       >
         {/* <h3>{name}</h3>  */}
         {/*FIXME dans Favoris.js */}
-        <h3>Poulet sauce moutarde</h3>
+        <h3>{name}</h3>
       </div>
 
       <div
@@ -59,7 +61,8 @@ const Card = ({ image, id }) => {
           userSelect: 'none',
         }}
       >
-        Difficile
+        {difficulty}
+        difficile
       </div>
       <Rating
         icon='heart'
@@ -86,6 +89,7 @@ const Card = ({ image, id }) => {
         }}
       >
         20 mns
+        {tps}
       </div>
       <Rating
         icon='star'
