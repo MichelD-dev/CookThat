@@ -46,7 +46,7 @@ const Footer = ({ onShowModal, user }) => {
       {/*---------------------------------------------------------*/}
       {/*---------------------------------------------------------*/}
 
-      <Link to='/' className='ui basic button item'>
+      <Link disabled to='/' className='ui basic button item'>
         <img src='../assets/images/logo.svg' alt='' />
       </Link>
 

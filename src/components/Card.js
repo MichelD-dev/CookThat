@@ -1,6 +1,22 @@
+import { useHistory } from 'react-router'
+import { useState } from 'react/cjs/react.development'
 import { Rating, Card as Cart, Image, Label } from 'semantic-ui-react'
 
 const Card = ({ name, image, id, difficulty, tps }) => {
+  const [rating, setRating] = useState(0)
+  const [favori, setFavori] = useState(0)
+  const history = useHistory()
+
+  const HandleRate = (e, { rating }) => {
+    e.preventDefault()
+    setRating(rating)
+  }
+  console.log(rating)
+  const HandleFavori = (e, { rating }) => {
+    e.preventDefault()
+    setFavori(rating)
+  }
+  console.log(favori)
   return (
     <Cart
       style={{
@@ -16,15 +32,20 @@ const Card = ({ name, image, id, difficulty, tps }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          // objectFit: 'contain',
         }}
       >
         {image ? (
-          <Image fluid src={image} as='a' href={`/recette/${id}`} />
+          // <Image fluid src={image} as='a' href={`/recette/${id}`} />
+          <Image
+            fluid
+            src={image}
+            // as='button'
+            onClick={() => history.push(`/recette/${id}`)}
+          />
         ) : (
           <Image
-            as='a'
-            href={`/recette/${id}`} //FIXME ne link pas vers la page recette
+            as='button'
+            onClick={() => history.push('/favoris')} //FIXME recharge la page
             centered
           >
             <Label content='Image introuvable' icon='warning' size='medium' />
@@ -47,7 +68,6 @@ const Card = ({ name, image, id, difficulty, tps }) => {
         {/* <h3>{name}</h3> */}
         <h3>Poulet à la moutarde</h3>
       </div>
-
       <div
         style={{
           position: 'absolute',
@@ -65,12 +85,13 @@ const Card = ({ name, image, id, difficulty, tps }) => {
       </div>
       <Rating
         icon='heart'
-        defaultRating={1}
         maxRating={1}
         size='huge'
+        onRate={HandleFavori}
+        rating={favori}
         style={{
           position: 'absolute',
-          opacity: '.9',
+          // opacity: '.9',
           top: '22px',
           right: '17px',
         }}
@@ -92,8 +113,9 @@ const Card = ({ name, image, id, difficulty, tps }) => {
       </div>
       <Rating
         icon='star'
-        defaultRating={3}
         maxRating={5}
+        onRate={HandleRate}
+        rating={rating}
         style={{
           position: 'absolute',
           bottom: '10px',

@@ -16,7 +16,6 @@ import {
   Segment,
   Image,
 } from 'semantic-ui-react'
-// import Ingredients from './Ingredients'
 
 const AddRecipeForm = ({ imgUrl }) => {
   const history = useHistory()
@@ -36,6 +35,7 @@ const AddRecipeForm = ({ imgUrl }) => {
     persons: '',
     inline: '',
     date: format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+    ratings: 0,
   })
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone()
 
@@ -57,7 +57,7 @@ const AddRecipeForm = ({ imgUrl }) => {
 
     setIngredientsList([
       ...ingredientsList,
-      { name: '', quantity: 0, unit: 'c.a.s' },
+      { name: '', quantity: '', unit: '' },
     ])
   }
 
@@ -122,7 +122,6 @@ const AddRecipeForm = ({ imgUrl }) => {
         photo: url,
       })
       imgUrl(url)
-      console.log(recettes)
       history.push('/')
     } catch (e) {
       setError(e.message)
@@ -149,7 +148,7 @@ const AddRecipeForm = ({ imgUrl }) => {
             />
           </div>
           <h5>Photos</h5>
-          <Segment >
+          <Segment>
             <div // FIXME padding Segment non modifiable
               {...getRootProps({ className: 'dropzone' })}
               style={{
@@ -157,19 +156,21 @@ const AddRecipeForm = ({ imgUrl }) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                overflow: 'hidden'
+                overflow: 'hidden',
               }}
             >
-              <input {...getInputProps()} onChange={handleFile}/>
+              <input {...getInputProps()} onChange={handleFile} />
               {file ? (
-                <Image fluid rounded >
+                <Image fluid rounded>
                   <img
                     src={`${URL.createObjectURL(file)}`}
                     alt='recette'
-                    style={{
-                      // objectFit: 'cover',
-                      // height: '100%',
-                    }}
+                    style={
+                      {
+                        // objectFit: 'cover',
+                        // height: '100%',
+                      }
+                    }
                   />
                 </Image>
               ) : (
@@ -289,7 +290,8 @@ const AddRecipeForm = ({ imgUrl }) => {
                 // }}
               >
                 {/* <div className='fields' style={{ marginBottom: '20px' }}> */}
-                <Form.Group vertical> {/*//FIXME*/}
+                <Form.Group vertical>
+                  {/*//FIXME revoir disposition des champs*/}
                   {/* <div className=' field'> */}
                   <label htmlFor='quantity'>Quantité</label>
                   <input
@@ -306,8 +308,6 @@ const AddRecipeForm = ({ imgUrl }) => {
                   {/* </div> */}
                 </Form.Group>
                 <Form.Group vertical>
-                  {' '}
-                  {/*FIXME */}
                   {/* <div className=' field'> */}
                   <label htmlFor='unit'>Mesure</label>
                   <Select

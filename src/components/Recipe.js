@@ -1,6 +1,6 @@
 import { collection, getDocs } from 'firebase/firestore'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import {
   Button,
   Container,
@@ -8,7 +8,6 @@ import {
   Icon,
   Image,
   Item,
-  ItemGroup,
   Label,
   Loader,
   Rating,
@@ -21,6 +20,7 @@ const Recipe = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState('')
   const { id } = useParams()
+  const history = useHistory()
 
   useEffect(() => {
     const getRecette = async () => {
@@ -34,7 +34,6 @@ const Recipe = () => {
           ...doc.data(),
         }))
         setData(recipes)
-        console.log(recipes)
       } catch (e) {
         setError(e.message)
       }
@@ -67,6 +66,7 @@ const Recipe = () => {
         }}
       >
         <Button
+          onClick={() => history.goBack()}
           size='large'
           attached='left'
           style={{ backgroundColor: 'rgba(50, 50, 50, 0.6)' }}
@@ -134,8 +134,8 @@ const Recipe = () => {
 
         <h2>Ingrédients</h2>
         <ul>
-          {data[id].ingredient.map(ingredient => (
-            <li>{ingredient.name}</li>
+          {data[id].ingredient.map((ingredient, id) => (
+            <li key={`ingredient - ${id}`}>{ingredient.name}</li>
           ))}
         </ul>
 
@@ -184,10 +184,9 @@ const Recipe = () => {
               etape,
               i // FIXME id?
             ) => (
-              <Container>
+              <Container key={i}>
                 <Item.Group
                   inline
-                  key={i}
                   style={{
                     display: 'flex',
                     justifyContent: 'space-evenly',

@@ -14,9 +14,11 @@ function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
   const [user, setUser] = useState(
-    null
-    // localStorage.getItem('userCredentials') || null
+    // null
+    localStorage.getItem('userCredentials') || null
   )
+
+  console.log('render')
 
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)

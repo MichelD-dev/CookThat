@@ -9,7 +9,7 @@ const Accueil = () => {
 
   useEffect(() => {
     const getRecipe = async () => {
-        try {
+      try {
         const querySnapshot = await getDocs(collection(db, 'recipes'))
         const cards = querySnapshot.docs.map(doc => ({
           // Tableau de tous les objets 'recette'
@@ -32,7 +32,14 @@ const Accueil = () => {
       <br />
       <div className='ui three stackable cards '>
         {data.map((card, id) => (
-          <Card key={data[id].id} name={data[id].name} image={data[id].photo} id={id} difficulty={data[id].difficulty}  tps={data[id].cookingTime}/>
+          <Card
+            key={data[id].id}
+            name={data[id].name}
+            image={data[id].photo}
+            id={id}
+            difficulty={data[id].difficulty}
+            tps={data[id].cookingTime}
+          />
         ))}
       </div>
     </div>
