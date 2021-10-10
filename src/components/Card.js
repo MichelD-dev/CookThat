@@ -1,39 +1,106 @@
-import { Link } from 'react-router-dom'
+import { Rating, Card as Cart, Image, Label } from 'semantic-ui-react'
 
 const Card = ({ image, id }) => {
   return (
-    <div
-      className='ui card'
+    <Cart
       style={{
         boxShadow: '1px 2px 5px grey',
         marginBottom: '20px',
         position: 'relative',
       }}
     >
-      <Link to={`/recette/${id}`} className='ui image'>
-        <img
-          src={image}
-          alt='food'
-          style={{
-            height: '200px',
-            objectFit: 'cover',
-          }}
-        />
+      <div
+        style={{
+          overflow: 'hidden',
+          height: '240px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        {image ? (
+          <Image src={image} as='a' href={`/recette/${id}`} />
+        ) : (
+          <Image
+            as='a'
+            href={`/recette/${id}`} //FIXME ne link pas vers la page recette
+            centered
+          >
+            <Label content='Image introuvable' icon='warning' size='medium' />
+          </Image>
+        )}
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          top: '15px',
+          left: '0',
+          backgroundColor: 'rgba(255, 255, 255, 0.6)',
+          padding: '12px 12px',
+          borderRadius: '0 7px 7px 0',
+          color: '#444',
+          fontWeight: 'bold',
+          userSelect: 'none',
+        }}
+      >
+        {/* <h3>{name}</h3>  */}
+        {/*FIXME dans Favoris.js */}
+        <h3>Poulet sauce moutarde</h3>
+      </div>
 
-        <div
-          className='ui star rating'
-          data-rating='4'
-          style={{
-            position: 'absolute',
-            bottom: '10px',
-            right: '0',
-            backgroundColor: 'white',
-            opacity: '.5',
-            padding: '15px',
-          }}
-        ></div>
-      </Link>
-    </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '10px',
+          left: '0',
+          backgroundColor: 'rgba(255, 255, 255, 0.6)',
+          padding: '7px 20px',
+          borderRadius: '0 7px 7px 0',
+          color: '#C55252',
+          userSelect: 'none',
+        }}
+      >
+        Difficile
+      </div>
+      <Rating
+        icon='heart'
+        defaultRating={1}
+        maxRating={1}
+        size='huge'
+        style={{
+          position: 'absolute',
+          opacity: '.9',
+          top: '22px',
+          right: '17px',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '65px',
+          right: '0',
+          backgroundColor: 'rgba(255, 255, 255, 0.6)',
+          padding: '5px 12px',
+          borderRadius: '7px 0 0 7px',
+          color: '#333',
+          userSelect: 'none',
+        }}
+      >
+        20 mns
+      </div>
+      <Rating
+        icon='star'
+        defaultRating={3}
+        maxRating={5}
+        style={{
+          position: 'absolute',
+          bottom: '10px',
+          right: '0',
+          backgroundColor: 'rgba(255, 255, 255, 0.6)',
+          padding: '11px',
+          borderRadius: '7px 0 0 7px',
+        }}
+      />
+    </Cart>
   )
 }
 

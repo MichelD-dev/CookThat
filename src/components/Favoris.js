@@ -1,11 +1,39 @@
 import Card from './Card'
 import image1 from '../assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.jpg'
 import image2 from '../assets/images/caroline-attwood-bpPTlXWTOvg-unsplash.jpg'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../firebase/firebase'
+import { useEffect, useState } from 'react'
 // import image3 from '../assets/images/jongsun-lee-JnFGgVaFpmE-unsplash.jpg'
 
 const Favoris = ({imageUrl}) => {
+  const [data, setData] = useState([])
+  const [error, setError] = useState('')
 
+  useEffect(() => {
+    const getRecette = async () => {
+      const collectionRef = collection(db, 'recipes')
+      try {
+        const querySnaphot = await getDocs(collectionRef)
 
+        const recipes = querySnaphot.docs.map(doc => ({
+          // Tableau de tous les objets 'recette'
+          id: doc.id,
+          ...doc.data(),
+        }))
+        setData(recipes)
+        console.log(recipes)
+      } catch (e) {
+        setError(e.message)
+      }
+    }
+
+    getRecette()
+  }, [])
+
+  // if (!data[id]) {
+  //   return <Loader indeterminate active size='big' content='Chargement...' />
+  // }
   
   return (
     <div className='ui container'>
@@ -19,7 +47,7 @@ const Favoris = ({imageUrl}) => {
 
 
 
-        <Card image={imageUrl} />
+        <Card image={imageUrl} name={data[0].name}/>
         <Card image={image2} />
         <Card image={image1} />
       </div>

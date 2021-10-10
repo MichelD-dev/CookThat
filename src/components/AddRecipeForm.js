@@ -99,7 +99,10 @@ const AddRecipeForm = ({ imgUrl }) => {
     e.preventDefault()
 
     try {
-      if (!file) return {/*FIXME  Pas d'envoi si pas d'image...*/}
+      if (!file)
+        return {
+          /*FIXME  Pas d'envoi si pas d'image...*/
+        }
 
       // on crée une référence vers le fichier dans firebase
       const imgRef = ref(storage, file.name)
@@ -185,32 +188,34 @@ const AddRecipeForm = ({ imgUrl }) => {
           </section>
           <div className='ui fluid vertical buttons'>
             <h5>Difficulté</h5>
-            <Button
-              onClick={e => {
-                e.preventDefault()
-                setRecettes({ ...recettes, difficulty: 'facile' })
-              }}
-            >
-              Facile
-            </Button>
-            <br />
-            <Button
-              onClick={e => {
-                e.preventDefault()
-                setRecettes({ ...recettes, difficulty: 'moyen' })
-              }}
-            >
-              Moyen
-            </Button>
-            <br />
-            <Button
-              onClick={e => {
-                e.preventDefault()
-                setRecettes({ ...recettes, difficulty: 'difficile' })
-              }}
-            >
-              Difficile
-            </Button>
+            <Container>
+              <Button
+                onClick={e => {
+                  e.preventDefault()
+                  setRecettes({ ...recettes, difficulty: 'facile' })
+                }}
+              >
+                Facile
+              </Button>
+              <br />
+              <Button
+                onClick={e => {
+                  e.preventDefault()
+                  setRecettes({ ...recettes, difficulty: 'moyen' })
+                }}
+              >
+                Moyen
+              </Button>
+              <br />
+              <Button
+                onClick={e => {
+                  e.preventDefault()
+                  setRecettes({ ...recettes, difficulty: 'difficile' })
+                }}
+              >
+                Difficile
+              </Button>
+            </Container>
             <br />
           </div>
 
@@ -277,8 +282,16 @@ const AddRecipeForm = ({ imgUrl }) => {
                 />
               </div>
 
-              <div className='fields' style={{ marginBottom: '20px' }}>
-                <div className=' field'>
+              <Form.Group
+                inline
+                // style={{
+                //   display: 'flex',
+                //   justifyContent: 'space-evenly',
+                // }}
+              >
+                {/* <div className='fields' style={{ marginBottom: '20px' }}> */}
+                <Form.Group vertical>
+                  {/* <div className=' field'> */}
                   <label htmlFor='quantity'>Quantité</label>
                   <input
                     type='text'
@@ -291,8 +304,10 @@ const AddRecipeForm = ({ imgUrl }) => {
                     }
                     value={ingredient.quantity}
                   />
-                </div>
-                <div className=' field'>
+                  {/* </div> */}
+                </Form.Group>
+                <Form.Group vertical> {/*FIXME */}
+                  {/* <div className=' field'> */}
                   <label htmlFor='unit'>Mesure</label>
                   <Select
                     placeholder='unité de mesure'
@@ -314,8 +329,10 @@ const AddRecipeForm = ({ imgUrl }) => {
                       { value: '', text: 'portions' },
                     ]}
                   ></Select>
-                </div>
-              </div>
+                  {/* </div> */}
+                  {/* </div> */}
+                </Form.Group>
+              </Form.Group>
               <Button
                 fluid
                 color='red'

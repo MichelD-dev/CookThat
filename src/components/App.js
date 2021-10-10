@@ -15,8 +15,8 @@ function App() {
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
   const [imageUrl, setImageUrl] = useState('')
   const [user, setUser] = useState(
-    null
-    // localStorage.getItem('userCredentials') || null
+    // null
+    localStorage.getItem('userCredentials') || null
   )
   const imgUrl = url => {
     setImageUrl(url)
