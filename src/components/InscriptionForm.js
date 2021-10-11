@@ -1,4 +1,6 @@
 import { auth } from '../firebase/firebase'
+import { collection, addDoc } from 'firebase/firestore'
+import { db } from '../firebase/firebase.js'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { useState } from 'react'
 import Modal from './Modal'
@@ -29,6 +31,12 @@ const InscriptionForm = ({
       )
       hideInscriptionModal()
     }
+
+    const user = await addDoc(collection(db, 'users'), {
+      email,
+      password,
+      favoris: '',
+    })
   }
 
   return (

@@ -14,11 +14,8 @@ function App() {
   const [modalConnexionIsShown, setModalConnexionIsShown] = useState(false)
   const [modalInscriptionIsShown, setModalInscriptionIsShown] = useState(false)
   const [user, setUser] = useState(
-    // null
     localStorage.getItem('userCredentials') || null
   )
-
-  console.log('render')
 
   const showConnexionModal = () => {
     setModalConnexionIsShown(true)
@@ -39,8 +36,9 @@ function App() {
     setUser(email)
   }
 
-  const userDisconnect = e => {
+  const userDisconnect = () => {
     setUser(null)
+    localStorage.setItem('userCredentials', null)
   }
 
   const authenticate = email => {
@@ -70,7 +68,7 @@ function App() {
         />
       )}
       <BrowserRouter>
-        <Route path='/' exact strict render={() => <Accueil />} />
+        <Route path='/' exact strict render={() => <Accueil user={user} />} />
 
         <Route
           path='/profile'

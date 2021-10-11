@@ -19,8 +19,8 @@ const ConnexionForm = ({
     showInscriptionModal()
   }
 
-  const send = async ev => {
-    ev.preventDefault()
+  const send = async e => {
+    e.preventDefault()
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -30,7 +30,7 @@ const ConnexionForm = ({
 
       hideConnexionModal()
       authenticate(userCredential.user.auth.currentUser.email)
-
+      console.log(userCredential.user) //TODO
       localStorage.setItem(
         'userCredentials',
         userCredential.user.auth.currentUser.email

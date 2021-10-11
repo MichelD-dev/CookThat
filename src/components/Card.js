@@ -1,22 +1,57 @@
 import { useHistory } from 'react-router'
-import { useState } from 'react/cjs/react.development'
-import { Rating, Card as Cart, Image, Label } from 'semantic-ui-react'
+import { doc, updateDoc } from 'firebase/firestore'
+import { db } from '../firebase/firebase.js'
+import { useState } from 'react'
+import { Rating, Card as Cart, Image } from 'semantic-ui-react'
 
-const Card = ({ name, image, id, difficulty, tps }) => {
+const Card = ({
+  user,
+  name,
+  image,
+  recipeId,
+  id,
+  difficulty,
+  tps,
+  ratings,
+  nbrVotes,
+}) => {
   const [rating, setRating] = useState(0)
+  const [votes, setVotes] = useState(0)
   const [favori, setFavori] = useState(0)
+  const [error, setError] = useState('')
   const history = useHistory()
 
   const HandleRate = (e, { rating }) => {
     e.preventDefault()
     setRating(rating)
+    setVotes(1)
   }
-  console.log(rating)
+
   const HandleFavori = (e, { rating }) => {
     e.preventDefault()
     setFavori(rating)
   }
-  console.log(favori)
+
+  const handleSelect = async e => {
+    e.preventDefault()
+    if (!rating) {
+      return
+    }
+    try {
+      await updateDoc(doc(db, 'recipes', recipeId), {
+        'ratings.ratings': (ratings * nbrVotes + rating) / (nbrVotes + 1),
+        'ratings.nbrVotes': nbrVotes + votes,
+      })
+      await updateDoc(doc(db, 'users', 'userId'), { //TODO useContext User
+        favoris: '',
+       
+      })
+      history.push(`/recette/${id}`)
+    } catch (e) {
+      setError(e.message)
+    }
+  }
+
   return (
     <Cart
       style={{
@@ -34,23 +69,7 @@ const Card = ({ name, image, id, difficulty, tps }) => {
           justifyContent: 'center',
         }}
       >
-        {image ? (
-          // <Image fluid src={image} as='a' href={`/recette/${id}`} />
-          <Image
-            fluid
-            src={image}
-            // as='button'
-            onClick={() => history.push(`/recette/${id}`)}
-          />
-        ) : (
-          <Image
-            as='button'
-            onClick={() => history.push('/favoris')} //FIXME recharge la page
-            centered
-          >
-            <Label content='Image introuvable' icon='warning' size='medium' />
-          </Image>
-        )}
+        <Image fluid src={image} onClick={handleSelect} />
       </div>
       <div
         style={{
@@ -65,8 +84,8 @@ const Card = ({ name, image, id, difficulty, tps }) => {
           userSelect: 'none',
         }}
       >
-        {/* <h3>{name}</h3> */}
-        <h3>Poulet à la moutarde</h3>
+        <h3>{name}</h3>
+        {/* <h3>Poulet à la moutarde</h3> */}
       </div>
       <div
         style={{
@@ -80,8 +99,8 @@ const Card = ({ name, image, id, difficulty, tps }) => {
           userSelect: 'none',
         }}
       >
-        {/* {difficulty} */}
-        difficile
+        {difficulty}
+        {/* difficile */}
       </div>
       <Rating
         icon='heart'
@@ -89,6 +108,7 @@ const Card = ({ name, image, id, difficulty, tps }) => {
         size='huge'
         onRate={HandleFavori}
         rating={favori}
+        disabled={!user}
         style={{
           position: 'absolute',
           // opacity: '.9',
@@ -96,6 +116,7 @@ const Card = ({ name, image, id, difficulty, tps }) => {
           right: '17px',
         }}
       />
+
       <div
         style={{
           position: 'absolute',
@@ -108,21 +129,22 @@ const Card = ({ name, image, id, difficulty, tps }) => {
           userSelect: 'none',
         }}
       >
-        20 mns
-        {/* {tps} */}
+        {/* 20 mns */}
+        {tps} min
       </div>
       <Rating
         icon='star'
         maxRating={5}
         onRate={HandleRate}
-        rating={rating}
+        rating={rating || 0}
+        disabled={!user}
         style={{
           position: 'absolute',
           bottom: '10px',
           right: '0',
           backgroundColor: 'rgba(255, 255, 255, 0.6)',
           padding: '10px',
-          borderRadius: '7px 0 0 7px',
+          borderRadius: '7px 0 0 7px', //FIXME l'affichage ne correspond pas ???
         }}
       />
     </Cart>

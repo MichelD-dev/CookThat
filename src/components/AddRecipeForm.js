@@ -17,13 +17,13 @@ import {
   Image,
 } from 'semantic-ui-react'
 
-const AddRecipeForm = ({ imgUrl }) => {
+const AddRecipeForm = () => {
   const history = useHistory()
   const [file, setFile] = useState(null)
   const [etapesList, setEtapesList] = useState([{ description: '' }])
   const [error, setError] = useState('')
   const [ingredientsList, setIngredientsList] = useState([
-    { name: '', quantity: '', unit: '' },
+    { name: '', quantity: 0, unit: '' },
   ])
   const [recettes, setRecettes] = useState({
     name: '',
@@ -35,7 +35,7 @@ const AddRecipeForm = ({ imgUrl }) => {
     persons: '',
     inline: '',
     date: format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
-    ratings: 0,
+    ratings: { nbrVotes: 5, ratings: 4 },
   })
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone()
 
@@ -121,7 +121,7 @@ const AddRecipeForm = ({ imgUrl }) => {
         etape: etapesList,
         photo: url,
       })
-      imgUrl(url)
+      // imgUrl(url)
       history.push('/')
     } catch (e) {
       setError(e.message)
@@ -290,7 +290,9 @@ const AddRecipeForm = ({ imgUrl }) => {
                 // }}
               >
                 {/* <div className='fields' style={{ marginBottom: '20px' }}> */}
-                <Form.Group vertical>
+                <Form.Group
+                // vertical
+                >
                   {/*//FIXME revoir disposition des champs*/}
                   {/* <div className=' field'> */}
                   <label htmlFor='quantity'>Quantité</label>
@@ -299,7 +301,10 @@ const AddRecipeForm = ({ imgUrl }) => {
                     id='quantity'
                     onChange={e =>
                       retoucherIngredient(
-                        { ...ingredient, quantity: e.currentTarget.value },
+                        {
+                          ...ingredient,
+                          quantity: e.currentTarget.value,
+                        },
                         i
                       )
                     }
@@ -307,16 +312,15 @@ const AddRecipeForm = ({ imgUrl }) => {
                   />
                   {/* </div> */}
                 </Form.Group>
-                <Form.Group vertical>
+                <Form.Group
+                // vertical
+                >
                   {/* <div className=' field'> */}
                   <label htmlFor='unit'>Mesure</label>
                   <Select
                     placeholder='unité de mesure'
-                    onChange={e =>
-                      retoucherIngredient(
-                        { ...ingredient, unit: e.currentTarget.value },
-                        i
-                      )
+                    onChange={(e, { value }) =>
+                      retoucherIngredient({ ...ingredient, unit: value }, i)
                     }
                     value={ingredient.unit}
                     options={[

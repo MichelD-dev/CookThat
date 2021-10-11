@@ -26,9 +26,9 @@ const Recipe = () => {
     const getRecette = async () => {
       const collectionRef = collection(db, 'recipes')
       try {
-        const querySnaphot = await getDocs(collectionRef)
+        const querySnapshot = await getDocs(collectionRef)
 
-        const recipes = querySnaphot.docs.map(doc => ({
+        const recipes = querySnapshot.docs.map(doc => ({
           // Tableau de tous les objets 'recette'
           id: doc.id,
           ...doc.data(),
@@ -38,7 +38,6 @@ const Recipe = () => {
         setError(e.message)
       }
     }
-
     getRecette()
   }, [])
 
@@ -79,16 +78,14 @@ const Recipe = () => {
             backgroundColor: 'rgba(255, 255, 255, 0.6)',
           }}
         >
-          {/* <h3>{name}</h3> */}
           <Header as='h3' style={{ color: '#666' }}>
-            {' '}
-            Poulet à la moutarde
+            {data[id].name}
           </Header>
         </Button>
       </Button.Group>
       <Container
         style={{
-          color: '#444',
+          color: '#666',
         }}
       >
         {/*--------------------------------------------- */}
@@ -100,8 +97,13 @@ const Recipe = () => {
             paddingTop: '20px',
           }}
         >
-          <Rating icon='star' defaultRating={3} maxRating={5} disabled />
-          32 votes
+          <Rating
+            icon='star'
+            maxRating={5}
+            disabled
+            rating={data[id].ratings.ratings || 0}
+          />
+          {Math.round(data[id].ratings.nbrVotes) || 0} votes
         </Item>
 
         {/*--------------------------------------------- */}
@@ -110,12 +112,14 @@ const Recipe = () => {
           style={{
             paddingTop: '20px',
           }}
-        >{`${
-          +data[id].prepTime + // TODO Vérifier ce qu'il se passe si undefined (sur tous les champs)
-          +data[id].restTime +
-          +data[id].cookingTime
-        } min - ${data[id].difficulty}`}</Item>
+        >
+          {`${
+            +data[id].prepTime + +data[id].restTime + +data[id].cookingTime
+          } min`}{' '}
+          - {data[id].difficulty || null}
+        </Item>
 
+        {/* TODO Vérifier ce qu'il se passe si undefined (sur tous les champs)}
         {/*--------------------------------------------- */}
 
         <Item
@@ -124,15 +128,31 @@ const Recipe = () => {
             justifyContent: 'space-between',
             // paddingTop: '20px',
           }}
-        >
-          {`${
-            data[id].people !== undefined ? data[id].people + 'personnes' : ''
-          }`}
-        </Item>
+        ></Item>
 
         {/*--------------------------------------------- */}
 
-        <h2>Ingrédients</h2>
+        <Item
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingTop: '20px',
+          }}
+        >
+          <Item.Header>
+            <h2>Ingrédients</h2>
+          </Item.Header>
+          <Item.Content>
+            <h4>
+              {`${
+                data[id].persons !== undefined
+                  ? data[id].persons + ' personnes'
+                  : ''
+              }`}
+            </h4>
+          </Item.Content>
+        </Item>
         <ul>
           {data[id].ingredient.map((ingredient, id) => (
             <li key={`ingredient - ${id}`}>{ingredient.name}</li>
@@ -150,6 +170,8 @@ const Recipe = () => {
               Number(data[id].cookingTime)}{' '}
             mns
           </p>
+
+          {/*--------------------------------------------- */}
 
           <Item
             style={{
@@ -179,7 +201,7 @@ const Recipe = () => {
         {/*--------------------------------------------- */}
 
         <ul style={{ padding: '0 0 100px 0' }}>
-          {data[0].etape.map(
+          {data[1].etape.map(
             (
               etape,
               i // FIXME id?

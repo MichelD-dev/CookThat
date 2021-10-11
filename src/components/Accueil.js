@@ -3,7 +3,7 @@ import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../firebase/firebase.js'
 import { useEffect, useState } from 'react'
 
-const Accueil = () => {
+const Accueil = ({ user }) => {
   const [data, setData] = useState([])
   const [error, setError] = useState('')
 
@@ -34,11 +34,15 @@ const Accueil = () => {
         {data.map((card, id) => (
           <Card
             key={data[id].id}
+            recipeId={data[id].id}
+            user={user}
             name={data[id].name}
             image={data[id].photo}
             id={id}
             difficulty={data[id].difficulty}
             tps={data[id].cookingTime}
+            ratings={data[id].ratings.ratings}
+            nbrVotes={data[id].ratings.nbrVotes}
           />
         ))}
       </div>
